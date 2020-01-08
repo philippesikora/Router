@@ -117,9 +117,9 @@ constexpr uint32_t ul_OFF_PEAK_DURATION{8ul}; // <- this is the duration of the 
 // the load 'i' will be started with full power at start_offpeak + 'offset' for a duration of 'duration'
 // - all values are in hours.
 // - to leave the load at full power till the end of the off-peak period, set the duration to 'UINT32_MAX' (somehow infinite time)
-constexpr uint32_t rg_ForceLoad[NO_OF_DUMPLOADS][2] = {{5, UINT32_MAX},
-                                                       {5, UINT32_MAX},
-                                                       {5, UINT32_MAX}};
+constexpr uint32_t rg_ForceLoad[NO_OF_DUMPLOADS][2] = {{0, 5},
+                                                       {0, 0},
+                                                       {0, 0}};
 #endif
 
 // -------------------------------
