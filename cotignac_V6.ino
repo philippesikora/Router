@@ -110,7 +110,7 @@ constexpr uint16_t BAD_TEMPERATURE{30000}; // this value (300C) is sent if no se
 #endif
 
 #ifdef OFF_PEAK_TARIFF
-#define PRIORITY_ROTATION                     // <- this line must be commented out if you want fixed priorities
+//#define PRIORITY_ROTATION                     // <- this line must be commented out if you want fixed priorities
 constexpr uint32_t ul_OFF_PEAK_DURATION{8ul}; // <- this is the duration of the off-peak period in hours
 // off-peak forced control for loads 0..n
 // for load 'i' => rg_ForceLoad[i] = { offset, duration }
@@ -880,51 +880,30 @@ void processDataLogging()
 
 // prints data logs to the Serial output
 //
-void printDataLogging()
+void printDataLogging()  // prints data logs to the Serial output
 {
-  uint8_t phase;
+  Serial.print("{\"L1\":");
+  Serial.print(tx_data.power_L[0]);
 
-  Serial.print(copyOf_energyInBucket_main / CYCLES_PER_SECOND);
-  Serial.print(F(", P:"));
-  Serial.print(tx_data.power);
+  Serial.print(",\"L2\":");
+  Serial.print(tx_data.power_L[1]);
 
-  for (phase = 0; phase < NO_OF_PHASES; ++phase)
-  {
-    Serial.print(F(", P"));
-    Serial.print(phase + 1);
-    Serial.print(F(":"));
-    Serial.print(tx_data.power_L[phase]);
-  }
-  for (phase = 0; phase < NO_OF_PHASES; ++phase)
-  {
-    Serial.print(F(", V"));
-    Serial.print(phase + 1);
-    Serial.print(F(":"));
-    Serial.print((float)tx_data.Vrms_L_times100[phase] / 100);
-  }
+  Serial.print(",\"L3\":");
+  Serial.print(tx_data.power_L[2]);
+            
+  Serial.print(",\"LOAD_0\":");
+  Serial.print(loadPrioritiesAndState[0]);
 
-#ifdef TEMP_SENSOR
-  Serial.print(", temperature ");
-  Serial.print((float)tx_data.temperature_times100 / 100);
-#endif
-  Serial.print(F(", (minSampleSets/MC "));
-  Serial.print(copyOf_lowestNoOfSampleSetsPerMainsCycle);
-  Serial.print(F(", #ofSampleSets "));
-  Serial.print(copyOf_sampleSetsDuringThisDatalogPeriod);
-  Serial.println(F(")"));
+
+  Serial.print(",\"LOAD_1\":");
+  Serial.print(loadPrioritiesAndState[1]);
+
+  Serial.print(",\"LOAD_2\":");
+  Serial.print(loadPrioritiesAndState[2]);
+
+  Serial.println("}");
 }
 
-// prints the load priorities to the Serial output
-//
-void logLoadPriorities()
-{
-  Serial.println(F("loadPriority: "));
-  for (const auto loadPrioAndState : loadPrioritiesAndState)
-  {
-    Serial.print(F("\tload "));
-    Serial.println(loadPrioAndState);
-  }
-}
 
 // This function changes the value of the load priorities
 // Since we don't have access to a clock, we detect the offPeak start from the main energy meter.
@@ -951,8 +930,7 @@ void checkLoadPrioritySelection()
     while (b_reOrderLoads)
       delay(10);
 #endif
-
-    logLoadPriorities();
+     
   }
   else
   {
@@ -1059,12 +1037,6 @@ void setup()
   delay(initialDelay); // allows time to open the Serial Monitor
 
   Serial.begin(9600); // initialize Serial interface
-  Serial.println();
-  Serial.println();
-  Serial.println();
-  Serial.println(F("----------------------------------"));
-  Serial.println(F("Sketch ID:  Mk2_3phase_RFdatalog_temp_1.ino"));
-
   for (uint8_t i = 0; i < NO_OF_DUMPLOADS; ++i)
   {
     DDRD |= (1 << physicalLoadPin[i]); // driver pin for Load #n
@@ -1097,10 +1069,6 @@ void setup()
   for (auto &DCoffset_V : l_DCoffset_V)
     DCoffset_V = 512L * 256L; // nominal mid-point value of ADC @ x256 scale
 
-  Serial.println(F("ADC mode:       free-running"));
-  Serial.print(F("requiredExport in Watts = "));
-  Serial.println(REQUIRED_EXPORT_IN_WATTS);
-
   // Set up the ADC to be free-running
   ADCSRA = (1 << ADPS0) + (1 << ADPS1) + (1 << ADPS2); // Set the ADC's clock to system clock / 128
   ADCSRA |= (1 << ADEN);                               // Enable the ADC
@@ -1116,40 +1084,15 @@ void setup()
   ADCSRA |= (1 << ADSC); // start ADC manually first time
   sei();                 // Enable Global Interrupts
 
-  for (uint8_t phase = 0; phase < NO_OF_PHASES; ++phase)
-  {
-    Serial.print(F("f_powerCal for L"));
-    Serial.print(phase + 1);
-    Serial.print(F(" =    "));
-    Serial.println(f_powerCal[phase], 4);
-  }
-  Serial.print(F("f_phaseCal for all phases"));
-  Serial.print(F(" =     "));
-  Serial.println(f_phaseCal);
+  //printParamsForSelectedOutputMode();
 
-  Serial.print(F("f_voltageCal, for Vrms  =      "));
-  Serial.println(f_voltageCal, 4);
-
-  Serial.print(F("Export rate (Watts) = "));
-  Serial.println(REQUIRED_EXPORT_IN_WATTS);
-
-  Serial.print(F("zero-crossing persistence (sample sets) = "));
-  Serial.println(PERSISTENCE_FOR_POLARITY_CHANGE);
-
-  printParamsForSelectedOutputMode();
-
-  logLoadPriorities();
-
-  Serial.print(F(">>free RAM = "));
-  Serial.println(freeRam()); // a useful value to keep an eye on
-
-  Serial.println(F("----"));
+  //logLoadPriorities();
 
 #ifdef TEMP_SENSOR
   convertTemperature(); // start initial temperature conversion
 #endif
 
-  Serial.print("RF capability ");
+  //Serial.print("RF capability ");
 
 #ifdef RF_PRESENT
   Serial.print(F("IS present, freq = "));
@@ -1159,7 +1102,7 @@ void setup()
     Serial.println(F("868 MHz"));
   rf12_initialize(nodeID, freq, networkGroup); // initialize RF
 #else
-  Serial.println(F("is NOT present"));
+  //Serial.println(F("is NOT present"));
 #endif
 
 #ifdef TEMP_SENSOR
@@ -1198,7 +1141,7 @@ void loop()
 
       tx_data.power += tx_data.power_L[phase];
 
-      tx_data.Vrms_L_times100[phase] = (int32_t)(100 * f_voltageCal * sqrt(copyOf_sum_Vsquared[phase] / copyOf_sampleSetsDuringThisDatalogPeriod));
+      //tx_data.Vrms_L_times100[phase] = (int32_t)(100 * f_voltageCal * sqrt(copyOf_sum_Vsquared[phase] / copyOf_sampleSetsDuringThisDatalogPeriod));
     }
 #ifdef TEMP_SENSOR
     tx_data.temperature_times100 = readTemperature();
@@ -1209,6 +1152,7 @@ void loop()
 #endif
 
     printDataLogging();
+
 
 #ifdef TEMP_SENSOR
     convertTemperature(); // for use next time around
