@@ -22,12 +22,6 @@
 #include <OneWire.h> // for temperature sensing
 #endif
 
-#ifdef RF_PRESENT
-#define RF69_COMPAT 0 // for the RFM12B
-// #define RF69_COMPAT 1 // for the RF69
-#include <JeeLib.h>
-#endif
-
 // In this sketch, the ADC is free-running with a cycle time of ~104uS.
 
 // -----------------------------------------------------
@@ -100,19 +94,6 @@ uint8_t loadPrioritiesAndState[NO_OF_DUMPLOADS]{0, 1, 2}; // load priorities and
 constexpr uint8_t loadStateOnBit{0x80U};                  // bit mask for load state ON
 constexpr uint8_t loadStateMask{0x7FU};                   // bit mask for masking load state
 
-/* --------------------------------------
-   RF configuration (for the RFM12B module)
-   frequency options are RF12_433MHZ, RF12_868MHZ or RF12_915MHZ
-*/
-#ifdef RF_PRESENT
-#define freq RF12_868MHZ
-
-constexpr int nodeID{10};        //  RFM12B node ID
-constexpr int networkGroup{210}; // wireless network group - needs to be same for all nodes
-constexpr int UNO{1};            // for when the processor contains the UNO bootloader.
-#endif
-
-// -------------------------------
 // definitions of a structure for datalogging
 using Tx_struct = struct
 {
@@ -970,23 +951,6 @@ int16_t readTemperature()
 }
 #endif
 
-#ifdef RF_PRESENT
-//
-// To avoid disturbance to the sampling process, the RFM12B needs to remain in its
-// active state rather than being periodically put to sleep.
-void send_rf_data()
-{
-  // check whether it's ready to send, and an exit route if it gets stuck
-  uint32_t i = 0;
-  while (!rf12_canSend() && i < 10)
-  {
-    rf12_recvDone();
-    ++i;
-  }
-  rf12_sendNow(0, &tx_data, sizeof tx_data);
-}
-#endif
-
 int freeRam()
 {
   extern int __heap_start, *__brkval;
@@ -1093,10 +1057,6 @@ void loop()
     }
 #ifdef TEMP_SENSOR
     tx_data.temperature_times100 = readTemperature();
-#endif
-
-#ifdef RF_PRESENT
-    send_rf_data();
 #endif
 
     printDataLogging();
