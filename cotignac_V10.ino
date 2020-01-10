@@ -16,8 +16,6 @@
 
 #define OFF_PEAK_TARIFF // <- this line must be commented out if there's only one single tariff each day
 
-//#define RF_PRESENT // <- this line must be commented out if the RFM12B module is not present
-
 #ifdef TEMP_SENSOR
 #include <OneWire.h> // for temperature sensing
 #endif
