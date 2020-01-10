@@ -873,7 +873,7 @@ void checkLoadPrioritySelection()
 #endif
 
     // prints the (new) load priorities
-    logLoadPriorities();
+    //logLoadPriorities();
   }
   else
   {
