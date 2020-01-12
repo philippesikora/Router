@@ -53,7 +53,7 @@ constexpr uint16_t BAD_TEMPERATURE{30000}; // this value (300C) is sent if no se
 #endif
 
 #ifdef OFF_PEAK_TARIFF
-#define PRIORITY_ROTATION                     // <- this line must be commented out if you want fixed priorities
+//#define PRIORITY_ROTATION                     // <- this line must be commented out if you want fixed priorities
 constexpr uint32_t ul_OFF_PEAK_DURATION{8ul}; // <- this is the duration of the off-peak period in hours
 /* off-peak forced control for loads 0..n
  for load 'i' => rg_ForceLoad[i] = { offset, duration }
