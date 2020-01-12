@@ -11,7 +11,7 @@
 
 #define NO_OUTPUT // <- this line can be commented out if "debuging" output is needed
 
-#define DATALOG_OUTPUT // <- this line can be commented if no datalogging is needed
+//#define DATALOG_OUTPUT // <- this line can be commented if no datalogging is needed
 
 #ifdef TEMP_SENSOR
 #include <OneWire.h> // for temperature sensing
