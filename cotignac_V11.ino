@@ -861,7 +861,7 @@ void checkLoadPrioritySelection()
   if (pinOffPeakState && !pinNewState)
   {
     // we start off-peak period
-    Serial.println(F("Change to off-peak period!"));
+    //Serial.println(F("Change to off-peak period!"));
     ul_TimeOffPeak = millis();
 
 #ifdef PRIORITY_ROTATION
