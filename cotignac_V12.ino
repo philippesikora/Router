@@ -67,9 +67,9 @@ using pairForceLoad = struct
   int8_t iStartOffset;
   uint8_t uiDuration;
 };
-constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{-3, UINT8_MAX},  // <-- for load #1
-                                                         {-3, UINT8_MAX},  // <-- for load #2
-                                                         {-3, UINT8_MAX}}; // <-- for load #3
+constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 5},  // <-- for load #1
+                                                         {0, 0},  // <-- for load #2
+                                                         {0, 0}}; // <-- for load #3
 #endif
 
 // -------------------------------
