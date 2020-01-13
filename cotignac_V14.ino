@@ -99,7 +99,7 @@ LoadStates physicalLoadState[NO_OF_DUMPLOADS];
 
 // For this multi-load version, the same mechanism has been retained but the
 // output mode is hard-coded as below:
-constexpr OutputModes outputMode{OutputModes::ANTI_FLICKER};
+constexpr OutputModes outputMode{OutputModes::NORMAL};
 
 // Load priorities at startup
 uint8_t loadPrioritiesAndState[NO_OF_DUMPLOADS]{0, 1, 2}; // load priorities and states.
