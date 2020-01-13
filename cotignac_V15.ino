@@ -11,7 +11,7 @@
 
 //#define NO_OUTPUT // <- this line can be commented out if "debuging" output is needed
 
-#define DATALOG_OUTPUT // <- this line can be commented if no datalogging is needed
+define DATALOG_OUTPUT // <- this line can be commented if no datalogging is needed
 
 #ifdef TEMP_SENSOR
 #include <OneWire.h> // for temperature sensing
@@ -24,7 +24,7 @@
 #endif
 
 #ifdef DATALOG_OUTPUT
-//#define JSON_FORMAT
+#define JSON_FORMAT
 #endif
 
 // In this sketch, the ADC is free-running with a cycle time of ~104uS.
