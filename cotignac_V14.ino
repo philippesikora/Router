@@ -1,4 +1,4 @@
-/* cotignac_V13.ino     
+/* cotignac_V14.ino     
 */
 
 #include <Arduino.h> // may not be needed, but it's probably a good idea to include this
@@ -9,9 +9,9 @@
 
 //#define RF_PRESENT // <- this line must be commented out if the RFM12B module is not present
 
-#define NO_OUTPUT // <- this line can be commented out if "debuging" output is needed
+//#define NO_OUTPUT // <- this line can be commented out if "debuging" output is needed
 
-//#define DATALOG_OUTPUT // <- this line can be commented if no datalogging is needed
+#define DATALOG_OUTPUT // <- this line can be commented if no datalogging is needed
 
 #ifdef TEMP_SENSOR
 #include <OneWire.h> // for temperature sensing
@@ -24,7 +24,7 @@
 #endif
 
 #ifdef DATALOG_OUTPUT
-//#define JSON_FORMAT
+#define JSON_FORMAT
 #endif
 
 // In this sketch, the ADC is free-running with a cycle time of ~104uS.
