@@ -25,7 +25,7 @@
 #endif
 
 #ifdef DATALOG_OUTPUT
-//#define JSON_FORMAT
+#define JSON_FORMAT
 #endif
 
 // In this sketch, the ADC is free-running with a cycle time of ~104uS.
@@ -54,7 +54,7 @@ constexpr uint16_t BAD_TEMPERATURE{30000}; // this value (300C) is sent if no se
 #endif
 
 #ifdef OFF_PEAK_TARIFF
-#define PRIORITY_ROTATION                     // <- this line must be commented out if you want fixed priorities
+//#define PRIORITY_ROTATION                     // <- this line must be commented out if you want fixed priorities
 constexpr uint32_t ul_OFF_PEAK_DURATION{8ul}; // <- this is the duration of the off-peak period in hours
 /* off-peak forced control for loads 0..n
  for load 'i' => rg_ForceLoad[i] = { offset, duration }
@@ -68,9 +68,9 @@ using pairForceLoad = struct
   int8_t iStartOffset;
   uint8_t uiDuration;
 };
-constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{-3, UINT8_MAX},  // <-- for load #1
-                                                         {-3, UINT8_MAX},  // <-- for load #2
-                                                         {-3, UINT8_MAX}}; // <-- for load #3
+constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 5},  // <-- for load #1
+                                                         {0, 0},  // <-- for load #2
+                                                         {0, 0}}; // <-- for load #3
 #endif
 
 // -------------------------------
@@ -100,7 +100,7 @@ LoadStates physicalLoadState[NO_OF_DUMPLOADS];
 
 // For this multi-load version, the same mechanism has been retained but the
 // output mode is hard-coded as below:
-constexpr OutputModes outputMode{OutputModes::ANTI_FLICKER};
+constexpr OutputModes outputMode{OutputModes::NORMAL};
 
 // Load priorities at startup
 uint8_t loadPrioritiesAndState[NO_OF_DUMPLOADS]{0, 1, 2}; // load priorities and states.
