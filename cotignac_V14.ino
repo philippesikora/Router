@@ -24,7 +24,7 @@
 #endif
 
 #ifdef DATALOG_OUTPUT
-#define JSON_FORMAT
+#define JSON_FORMAT // <- this line should be commented to output JSON formet on TX/RX
 #endif
 
 // In this sketch, the ADC is free-running with a cycle time of ~104uS.
