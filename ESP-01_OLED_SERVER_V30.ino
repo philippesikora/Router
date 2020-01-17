@@ -227,7 +227,7 @@ void handle_NotFound(){
 }
 
 void oled_display () {
-    if (LOAD_0 == 0x80) {
+    if ((LOAD_0 == 100) || (LOAD_0 > 0)) {
       routing = "Cumulus";
       oled.setFont ( System5x7 );
       oled.clear ( );
@@ -245,25 +245,7 @@ void oled_display () {
       oled.println ("CUMULUS");   
     }
 
-    if (LOAD_1 == 0x81) {
-      routing = "Load_1";
-      oled.setFont ( System5x7 );
-      oled.clear ( );
-      oled.set2X ( );
-      oled.print ("PW: ");                // Total ACTIVE POWER
-      oled.print (ACTIVE_POWER);
-      oled.println ("W");
-      oled.print ("L2= ");               // L2 ACTIVE POWER
-      oled.print (L2);
-      oled.println ("W");
-      oled.print ("PR= ");               // P_routed
-      oled.print (p_routed);
-      oled.println ("W"); 
-      oled.print ("RT= ");               // Routing
-      oled.println ("LOAD_1");   
-    }
-
-   if (LOAD_2 == 0x82) {
+   if ((LOAD_2 == 100) || (LOAD_2 > 0)) {
       routing = "EDF INJECT";
       oled.setFont ( System5x7 );
       oled.clear ( );
@@ -281,7 +263,7 @@ void oled_display () {
       oled.println ("EDF INJ");   
     }
     
-   if ((LOAD_0 + LOAD_1 + LOAD_2) == 3) {
+   if ((LOAD_0 + LOAD_1 + LOAD_2) == 0) {
      routing = "OFF";
      oled.setFont ( System5x7 );
      oled.clear ( );
