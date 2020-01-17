@@ -1,4 +1,4 @@
-/* cotignac_V18.ino
+/* cotignac_V19.ino
    
 */
 
@@ -891,13 +891,13 @@ printDataLogging()
   Serial.print(tx_data.power_L[2]);
    
   Serial.print(R"(,"LOAD_0":)");
-  Serial.print(loadPrioritiesAndState[0]);
+  Serial.print((100 * copyOf_countLoadON[0]) / copyOf_sampleSetsDuringThisDatalogPeriod);
    
   Serial.print(R"(,"LOAD_1":)");
-  Serial.print(loadPrioritiesAndState[1]);
+  Serial.print((100 * copyOf_countLoadON[1]) / copyOf_sampleSetsDuringThisDatalogPeriod);
    
   Serial.print(R"(,"LOAD_2":)");
-  Serial.print(loadPrioritiesAndState[2]);
+  Serial.print((100 * copyOf_countLoadON[2]) / copyOf_sampleSetsDuringThisDatalogPeriod);
    
   Serial.println("}");
 }
@@ -1065,7 +1065,7 @@ void setup()
   Serial.println();
   Serial.println();
   Serial.println(F("----------------------------------"));
-  Serial.println(F("Sketch ID:  cotignac_V18.ino"));
+  Serial.println(F("Sketch ID:  cotignac_V19.ino"));
 #endif
 
   // initializes all loads to OFF at startup
