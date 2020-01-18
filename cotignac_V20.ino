@@ -1054,8 +1054,6 @@ void processDataLogging()
  */
 void printDataLogging()
 {
-  uint8_t phase;
-
 #ifndef JSON_FORMAT
   Serial.print(R"({"L1":)");
   Serial.print(tx_data.power_L[0]);
