@@ -1081,29 +1081,7 @@ void printDataLogging()
   Serial.print(", temperature ");
   Serial.print((float)tx_data.temperature_times100 / 100);
 #endif
-  
-#else
-  for (phase = 0; phase < NO_OF_PHASES; ++phase)
-  {
-    Serial.print(F(R"({"L)"));
-    Serial.print(phase + 1);
-    Serial.print(F(R"(": )"));
-    Serial.print(tx_data.power_L[phase]);
-    Serial.print(F(", "));
-  }
-
-  for (uint8_t i = 0; i < NO_OF_DUMPLOADS; ++i)
-  {
-    Serial.print(F(R"(,"LOAD_)"));
-    Serial.print(i + 1);
-    Serial.print(F(R"(": ")"));
-    Serial.print((100 * copyOf_countLoadON[i]) / copyOf_sampleSetsDuringThisDatalogPeriod);
-    Serial.print(F(R"(")"));
-    if (NO_OF_DUMPLOADS == (i + 1))
-      Serial.print(F(", ")); // no ',' for last item
-  }
-
-  Serial.println(F("}"));
+ 
 #endif
 }
 
