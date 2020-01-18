@@ -143,7 +143,7 @@ constexpr uint16_t BAD_TEMPERATURE{30000}; /**< this value (300C) is sent if no 
 #endif
 
 #ifdef OFF_PEAK_TARIFF
-#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
+//#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
 
 constexpr uint32_t ul_OFF_PEAK_DURATION{8ul}; /**< Duration of the off-peak period in hours */
 
@@ -166,9 +166,9 @@ public:
   uint8_t uiDuration{0};  /**< the duration for forcing the load in hours */
 };
 
-constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{-3, UINT8_MAX},  /**< force config for load #1 */
-                                                         {-3, UINT8_MAX},  /**< force config for load #2 */
-                                                         {-3, UINT8_MAX}}; /**< force config for load #3 */
+constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 5},  /**< force config for load #1 */
+                                                         {0, 0},  /**< force config for load #2 */
+                                                         {0, 0}}; /**< force config for load #3 */
 #endif
 
 // -------------------------------
@@ -202,7 +202,8 @@ constexpr uint8_t loadStateMask{0x7FU};  /**< bit mask for masking load state */
 LoadStates physicalLoadState[NO_OF_DUMPLOADS]; /**< Physical state of the loads */
 uint16_t countLoadON[NO_OF_DUMPLOADS];         /**< Number of cycle the load was ON (over 1 datalog period) */
 
-constexpr OutputModes outputMode{OutputModes::ANTI_FLICKER}; /**< Output mode to be used */
+//constexpr OutputModes outputMode{OutputModes::ANTI_FLICKER}; /**< Output mode to be used */
+constexpr OutputModes outputMode{OutputModes::NORMAL}; /**< Output mode to be used */
 
 // Load priorities at startup
 uint8_t loadPrioritiesAndState[NO_OF_DUMPLOADS]{0, 1, 2}; /**< load priorities and states. */
@@ -1056,35 +1057,31 @@ void printDataLogging()
   uint8_t phase;
 
 #ifndef JSON_FORMAT
-  Serial.print(copyOf_energyInBucket_main / CYCLES_PER_SECOND);
-  Serial.print(F(", P:"));
-  Serial.print(tx_data.power);
+  Serial.print(R"({"L1":)");
+  Serial.print(tx_data.power_L[0]);
 
-  for (phase = 0; phase < NO_OF_PHASES; ++phase)
-  {
-    Serial.print(F(", P"));
-    Serial.print(phase + 1);
-    Serial.print(F(":"));
-    Serial.print(tx_data.power_L[phase]);
-  }
-  for (phase = 0; phase < NO_OF_PHASES; ++phase)
-  {
-    Serial.print(F(", V"));
-    Serial.print(phase + 1);
-    Serial.print(F(":"));
-    Serial.print((float)tx_data.Vrms_L_times100[phase] / 100);
-  }
+  Serial.print(R"(,"L2":)");
+  Serial.print(tx_data.power_L[1]);
+
+  Serial.print(R"(,"L3":)");
+  Serial.print(tx_data.power_L[2]);
+   
+  Serial.print(R"(,"LOAD_0":)");
+  Serial.print((100 * copyOf_countLoadON[0]) / copyOf_sampleSetsDuringThisDatalogPeriod);
+   
+  Serial.print(R"(,"LOAD_1":)");
+  Serial.print((100 * copyOf_countLoadON[1]) / copyOf_sampleSetsDuringThisDatalogPeriod);
+   
+  Serial.print(R"(,"LOAD_2":)");
+  Serial.print((100 * copyOf_countLoadON[2]) / copyOf_sampleSetsDuringThisDatalogPeriod);
+   
+  Serial.println("}");
 
 #ifdef TEMP_SENSOR
   Serial.print(", temperature ");
   Serial.print((float)tx_data.temperature_times100 / 100);
 #endif
-  Serial.print(F(", (minSampleSets/MC "));
-  Serial.print(copyOf_lowestNoOfSampleSetsPerMainsCycle);
-  Serial.print(F(", #ofSampleSets "));
-  Serial.print(copyOf_sampleSetsDuringThisDatalogPeriod);
-  Serial.println(F(")"));
-
+  
 #else
   for (phase = 0; phase < NO_OF_PHASES; ++phase)
   {
