@@ -37,7 +37,7 @@
 // Modification for 3-phase PCB (Fred)
 // ***************************
 #define NO_OF_PHASES 3      // nb of phases
-#define CURRENT_CAL_PHASE 2 // current phase/CT to be calibrated (L1-->0, L2-->1,L3-->2)
+#define CURRENT_CAL_PHASE 0 // current phase/CT to be calibrated (L1-->0, L2-->1,L3-->2)
 
 // definition of enumerated types
 enum polarities
