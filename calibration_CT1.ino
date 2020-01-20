@@ -139,7 +139,7 @@ unsigned long LED_onAt;
 // powerCal is the RECIPR0CAL of the power conversion rate. A good value
 // to start with is therefore 1/20 = 0.05 (Watts per ADC-step squared)
 //
-const float powerCal_grid[NO_OF_PHASES] = {0.0558, 0.0562, 0.0560};
+const float powerCal_grid[NO_OF_PHASES] = {0.05, 0.05, 0.05};
 
 // phaseCal is used to alter the phase of the voltage waveform relative to the
 // current waveform. The algorithm interpolates between the most recent pair
