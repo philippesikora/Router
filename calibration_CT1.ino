@@ -481,6 +481,29 @@ void registerConsumedPower(const long powerRaw)
   Serial.println("W");
 }
 
+void json()
+{
+  Serial.print(R"({"L1":)");
+  Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
+
+  Serial.print(R"(,"L2":)");
+  Serial.print(0);
+
+  Serial.print(R"(,"L3":)");
+  Serial.print(0);
+   
+  Serial.print(R"(,"LOAD_0":)");
+  Serial.print(0);
+   
+  Serial.print(R"(,"LOAD_1":)");
+  Serial.print(0);
+   
+  Serial.print(R"(,"LOAD_2":)");
+  Serial.print(0);
+   
+  Serial.println("}")
+}     
+
 void check_LED_status()
 {
   if (LED_pulseInProgress == false)
