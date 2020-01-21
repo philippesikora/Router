@@ -168,11 +168,11 @@ void setup()
 
   delay(delayBeforeSerialStarts * 1000); // allow time to open Serial monitor
 
-  Serial.begin(9600);
-  Serial.println();
-  Serial.println("-------------------------------------");
-  Serial.println("Sketch ID:      calibration_CT1.ino");
-  Serial.println();
+  //Serial.begin(9600);
+  //Serial.println();
+  //Serial.println("-------------------------------------");
+  //Serial.println("Sketch ID:      calibration_CT1.ino");
+  //Serial.println();
 
   // When using integer maths, the SIZE of the ENERGY BUCKET is altered to match the
   // scaling of the energy detection mechanism that is in use. This avoids the need
@@ -208,17 +208,17 @@ void setup()
   Timer1.initialize(ADC_TIMER_PERIOD); // set Timer1 interval
   Timer1.attachInterrupt(timerIsr);    // declare timerIsr() as interrupt service routine
 
-  Serial.print("Calibrating phase L");
-  Serial.println(CURRENT_CAL_PHASE + 1);
-  Serial.print("powerCal_grid =      ");
-  Serial.println(powerCal_grid[CURRENT_CAL_PHASE], 4);
+  //Serial.print("Calibrating phase L");
+  //Serial.println(CURRENT_CAL_PHASE + 1);
+  //Serial.print("powerCal_grid =      ");
+  //Serial.println(powerCal_grid[CURRENT_CAL_PHASE], 4);
 
-  Serial.print("zero-crossing persistence (sample sets) = ");
-  Serial.println(PERSISTENCE_FOR_POLARITY_CHANGE);
-  Serial.print("continuity sampling display rate (mains cycles) = ");
-  Serial.println(CONTINUITY_CHECK_MAXCOUNT);
+  //Serial.print("zero-crossing persistence (sample sets) = ");
+  //Serial.println(PERSISTENCE_FOR_POLARITY_CHANGE);
+  //Serial.print("continuity sampling display rate (mains cycles) = ");
+  //Serial.println(CONTINUITY_CHECK_MAXCOUNT);
 
-  Serial.println("----");
+  //Serial.println("----");
 }
 // An Interrupt Service Routine is now defined in which the ADC is instructed to
 // measure each analogue input in sequence. A "data ready" flag is set after each
@@ -474,15 +474,11 @@ void registerConsumedPower(const long powerRaw)
   digitalWrite(outputForLED, LED_state);
   LED_pulseInProgress = true;
 
-  Serial.print("Power L");
-  Serial.print(CURRENT_CAL_PHASE + 1);
-  Serial.print(": ");
-  Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
-  Serial.println("W");
-}
-
-void json()
-{
+  //Serial.print("Power L");
+  //Serial.print(CURRENT_CAL_PHASE + 1);
+  //Serial.print(": ");
+  //Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
+  //Serial.println("W");
   Serial.print(R"({"L1":)");
   Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
 
@@ -502,8 +498,9 @@ void json()
   Serial.print(0);
    
   Serial.println("}")
-}     
+}
 
+   
 void check_LED_status()
 {
   if (LED_pulseInProgress == false)
