@@ -149,7 +149,7 @@ void setup()
   Serial.begin(9600);
   Serial.println();
   Serial.println("-------------------------------------");
-  Serial.println("Sketch ID:      cal_CTx_v_meter.ino");
+  Serial.println("Sketch ID:      cal_CT1_v_meter.ino");
   Serial.println();
 
   // When using integer maths, the SIZE of the ENERGY BUCKET is altered to match the
