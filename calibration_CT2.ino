@@ -1,4 +1,4 @@
-/* calibration_CT1.ino
+/* calibration_CT2.ino
 */
 
 #include <Arduino.h>
@@ -15,7 +15,7 @@
 // Modification for 3-phase PCB (Fred)
 // ***************************
 #define NO_OF_PHASES 3      // nb of phases
-#define CURRENT_CAL_PHASE 0 // current phase/CT to be calibrated (L1-->0, L2-->1,L3-->2)
+#define CURRENT_CAL_PHASE 1 // current phase/CT to be calibrated (L1-->0, L2-->1,L3-->2)
 
 // definition of enumerated types
 enum polarities
@@ -149,7 +149,7 @@ void setup()
   Serial.begin(9600);
   //Serial.println();
   //Serial.println("-------------------------------------");
-  //Serial.println("Sketch ID:      calibration_CT1.ino");
+  //Serial.println("Sketch ID:      calibration_CT2.ino");
   //Serial.println();
 
   // When using integer maths, the SIZE of the ENERGY BUCKET is altered to match the
@@ -458,11 +458,11 @@ void registerConsumedPower(const long powerRaw)
   //Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
   //Serial.println("W");
   Serial.print(R"({"L1":)");
-  Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
-
-  Serial.print(R"(,"L2":)");
   Serial.print(0);
 
+  Serial.print(R"(,"L2":)");
+  Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
+  
   Serial.print(R"(,"L3":)");
   Serial.print(0);
    
