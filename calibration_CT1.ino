@@ -475,7 +475,7 @@ void registerConsumedPower(const long powerRaw)
   Serial.print(R"(,"LOAD_2":)");
   Serial.print(0);
    
-  Serial.println("}")
+  Serial.println("}");
 }
 
    
