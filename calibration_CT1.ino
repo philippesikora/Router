@@ -146,7 +146,7 @@ void setup()
 
   delay(delayBeforeSerialStarts * 1000); // allow time to open Serial monitor
 
-  //Serial.begin(9600);
+  Serial.begin(9600);
   //Serial.println();
   //Serial.println("-------------------------------------");
   //Serial.println("Sketch ID:      calibration_CT1.ino");
