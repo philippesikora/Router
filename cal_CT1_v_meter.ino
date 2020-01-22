@@ -1,4 +1,4 @@
-/* cal_CTx_v_meter.ino
+/* cal_CT1_v_meter.ino
 */
 
 #include <Arduino.h>
