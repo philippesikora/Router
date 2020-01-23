@@ -342,7 +342,7 @@ void processPlusHalfCycle()
       sampleSetsDuringThisMainsCycle = 0;   // not yet dealt with for this cycle
       sampleCount_forContinuityChecker = 1; // opportunity has been missed for this cycle
       lowestNoOfSampleSetsPerMainsCycle = 999;
-      Serial.println("Go!");
+      //Serial.println("Go!");
     }
 
     return;
