@@ -458,13 +458,13 @@ void registerConsumedPower(const long powerRaw)
   //Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
   //Serial.println("W");
   Serial.print(R"({"L1":)");
-  Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
+  Serial.print(0);
 
   Serial.print(R"(,"L2":)");
   Serial.print(0);
 
   Serial.print(R"(,"L3":)");
-  Serial.print(0);
+  Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
    
   Serial.print(R"(,"LOAD_0":)");
   Serial.print(0);
