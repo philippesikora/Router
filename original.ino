@@ -78,9 +78,8 @@ boolean LED_pulseInProgress = false;
 unsigned long LED_onAt;
 
 const float powerCal_grid[NO_OF_PHASES] = {1.0, 1.0, 1.0};
-
-const float phaseCal[NO_OF_PHASES] = {1.0, 1.0, 1.0}; // <- nominal values only
-int phaseCal_int[NO_OF_PHASES];                       // to avoid the need for floating-point maths
+const float phaseCal[NO_OF_PHASES] = {1.0, 1.0, 1.0}; 
+int phaseCal_int[NO_OF_PHASES];                       
 
 void setup()
 {
