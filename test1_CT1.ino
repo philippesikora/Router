@@ -1,4 +1,4 @@
-/* cal_CT1_v_meter.ino
+/* test1_CT1.ino
 */
 
 #include <Arduino.h>
@@ -77,7 +77,7 @@ enum LED_states LED_state;
 boolean LED_pulseInProgress = false;
 unsigned long LED_onAt;
 
-const float powerCal_grid[NO_OF_PHASES] = {1, 1, 1};
+const float powerCal_grid[NO_OF_PHASES] = {1.0, 1.0, 1.0};
 
 const float phaseCal[NO_OF_PHASES] = {1.0, 1.0, 1.0}; // <- nominal values only
 int phaseCal_int[NO_OF_PHASES];                       // to avoid the need for floating-point maths
@@ -397,31 +397,31 @@ void registerConsumedPower(const long powerRaw)
   digitalWrite(outputForLED, LED_state);
   LED_pulseInProgress = true;
 
-  //Serial.print("Power L");
-  //Serial.print(CURRENT_CAL_PHASE + 1);
-  //Serial.print(": ");
-  //Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
-  //Serial.println("W");
-
-  Serial.print(R"({"L1":)");
+  Serial.print("Power L");
+  Serial.print(CURRENT_CAL_PHASE + 1);
+  Serial.print(": ");
   Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
+  Serial.println("W");
 
-  Serial.print(R"(,"L2":)");
-  Serial.print(0);
+  //Serial.print(R"({"L1":)");
+  //Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
 
-  Serial.print(R"(,"L3":)");
-  Serial.print(0);
+  //Serial.print(R"(,"L2":)");
+  //Serial.print(0);
+
+  //Serial.print(R"(,"L3":)");
+  //Serial.print(0);
    
-  Serial.print(R"(,"LOAD_0":)");
-  Serial.print(0);
+  //Serial.print(R"(,"LOAD_0":)");
+  //Serial.print(0);
    
-  Serial.print(R"(,"LOAD_1":)");
-  Serial.print(0);
+  //Serial.print(R"(,"LOAD_1":)");
+  //Serial.print(0);
    
-  Serial.print(R"(,"LOAD_2":)");
-  Serial.print(0);
+  //Serial.print(R"(,"LOAD_2":)");
+  //Serial.print(0);
    
-  Serial.println("}");
+  //Serial.println("}");
 }
 
 void check_LED_status()
