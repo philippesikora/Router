@@ -1,26 +1,4 @@
 /* cal_CTx_v_meter.ino
-
-   September 2019
-   This calibration sketch is based on cal_CT1_v_meter.ino.
-   It is intended to be used with the 3-phase rev 2 PCB.
-   Each CT/phase can be calibrated be setting the appropriate 'CURRENT_CAL_PHASE'.
-        Fred Metrich
-
-   February 2018
-   This calibration sketch is based on Mk2_bothDisplays_4.ino. Its purpose is to
-   mimic the behaviour of a digital electricity meter.
-
-   CT1 should be clipped around one of the live cables that pass through the
-   meter. The energy flow measured by CT1 is noted and a short pulse is generated
-   whenever a pre-set amount of energy has been recorded (normally 3600J).
-
-   This stream of pulses can then be compared against optical pulses from a standard
-   electrical utility meter. The pulse rate can be varied by adjusting the value
-   of powerCal_grid. When the two streams of pulses are in synch, correct calibration
-   of the CT1 channel has been achieved.
-
-        Robin Emley
-        www.Mk2PVrouter.co.uk
 */
 
 #include <Arduino.h>
@@ -169,11 +147,7 @@ void setup()
   delay(delayBeforeSerialStarts * 1000); // allow time to open Serial monitor
 
   Serial.begin(9600);
-  Serial.println();
-  Serial.println("-------------------------------------");
-  Serial.println("Sketch ID:      cal_CTx_v_meter.ino");
-  Serial.println();
-
+ 
   // When using integer maths, the SIZE of the ENERGY BUCKET is altered to match the
   // scaling of the energy detection mechanism that is in use. This avoids the need
   // to re-scale every energy contribution, thus saving processing time. This process
@@ -207,19 +181,8 @@ void setup()
 
   Timer1.initialize(ADC_TIMER_PERIOD); // set Timer1 interval
   Timer1.attachInterrupt(timerIsr);    // declare timerIsr() as interrupt service routine
-
-  Serial.print("Calibrating phase L");
-  Serial.println(CURRENT_CAL_PHASE + 1);
-  Serial.print("powerCal_grid =      ");
-  Serial.println(powerCal_grid[CURRENT_CAL_PHASE], 4);
-
-  Serial.print("zero-crossing persistence (sample sets) = ");
-  Serial.println(PERSISTENCE_FOR_POLARITY_CHANGE);
-  Serial.print("continuity sampling display rate (mains cycles) = ");
-  Serial.println(CONTINUITY_CHECK_MAXCOUNT);
-
-  Serial.println("----");
 }
+
 // An Interrupt Service Routine is now defined in which the ADC is instructed to
 // measure each analogue input in sequence. A "data ready" flag is set after each
 // voltage conversion has been completed.
@@ -364,7 +327,6 @@ void processPlusHalfCycle()
       sampleSetsDuringThisMainsCycle = 0;   // not yet dealt with for this cycle
       sampleCount_forContinuityChecker = 1; // opportunity has been missed for this cycle
       lowestNoOfSampleSetsPerMainsCycle = 999;
-      Serial.println("Go!");
     }
 
     return;
@@ -431,7 +393,6 @@ void processPlusHalfCycle()
   if (sampleCount_forContinuityChecker >= CONTINUITY_CHECK_MAXCOUNT)
   {
     sampleCount_forContinuityChecker = 0;
-    Serial.println(lowestNoOfSampleSetsPerMainsCycle);
     lowestNoOfSampleSetsPerMainsCycle = 999;
   }
 
