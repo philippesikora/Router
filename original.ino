@@ -434,12 +434,26 @@ void registerConsumedPower(const long powerRaw)
   LED_state = LED_ON;
   digitalWrite(outputForLED, LED_state);
   LED_pulseInProgress = true;
-
-  Serial.print("Power L");
-  Serial.print(CURRENT_CAL_PHASE + 1);
-  Serial.print(": ");
+  
+  Serial.print(R"({"L1":)");
   Serial.print((long)(powerRaw * powerCal_grid[CURRENT_CAL_PHASE]));
-  Serial.println("W");
+
+  Serial.print(R"(,"L2":)");
+  Serial.print(0);
+
+  Serial.print(R"(,"L3":)");
+  Serial.print(0);
+   
+  Serial.print(R"(,"LOAD_0":)");
+  Serial.print(0);
+   
+  Serial.print(R"(,"LOAD_1":)");
+  Serial.print(0);
+   
+  Serial.print(R"(,"LOAD_2":)");
+  Serial.print(0);
+   
+  Serial.println("}");
 }
 
 void check_LED_status()
