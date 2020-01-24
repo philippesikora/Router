@@ -15,7 +15,7 @@
 // Modification for 3-phase PCB (Fred)
 // ***************************
 #define NO_OF_PHASES 3      // nb of phases
-#define CURRENT_CAL_PHASE 2 // current phase/CT to be calibrated (L1-->0, L2-->1,L3-->2)
+#define CURRENT_CAL_PHASE 0 // current phase/CT to be calibrated (L1-->0, L2-->1,L3-->2)
 
 // definition of enumerated types
 enum polarities
@@ -77,63 +77,8 @@ enum LED_states LED_state;
 boolean LED_pulseInProgress = false;
 unsigned long LED_onAt;
 
-// Calibration values
-//-------------------
-// Two calibration values are used: powerCal and phaseCal.
-//
-// powerCal is a floating point variable which is used for converting the
-// product of voltage and current samples into Watts.
-//
-// The correct value of powerCal is dependent on the hardware that is
-// in use. For best resolution, the hardware should be configured so that the
-// voltage and current waveforms each span most of the ADC's usable range. For
-// many systems, the maximum power that will need to be measured is around 3kW.
-//
-// My sketch "RawSamplesTool.ino" provides a one-shot visual display of the
-// voltage and current waveforms as recorded by the processor. This provides
-// a simple way for the user to be confident that their system has been set up
-// correctly for the power levels that are to be measured.
-//
-// In the case of 240V mains voltage, the numerical value of the input signal
-// in Volts is likely to be fairly similar to the output signal in ADC levels.
-// 240V AC has a peak-to-peak amplitude of 679V, which is not far from the ideal
-// output range. Stated more formally, the conversion rate of the overall system
-// for measuring VOLTAGE is likely to be around 1 ADC-step per Volt.
-//
-// In the case of AC current, however, the situation is very different. At
-// mains voltage, a power of 3kW corresponds to an RMS current of 12.5A which
-// has a peak-to-peak range of 35A. This value is numerically smaller than the
-// likely output signal from the ADC when measuring current by a factor of
-// approximately twenty. The conversion rate of the overall system for measuring
-// CURRENT is therefore likely to be around 20 ADC-steps per Amp.
-//
-// When calculating "real power", which is what this code does, the individual
-// conversion rates for voltage and current are not of importance. It is
-// only the conversion rate for POWER which is important. This is the
-// product of the individual conversion rates for voltage and current. It
-// therefore has the units of ADC-steps squared per Watt. Most systems will
-// have a power conversion rate of around 20 (ADC-steps squared per Watt).
-//
-// powerCal is the RECIPR0CAL of the power conversion rate. A good value
-// to start with is therefore 1/20 = 0.05 (Watts per ADC-step squared)
-//
-const float powerCal_grid[NO_OF_PHASES] = {0.0558, 0.0562, 0.0560};
+const float powerCal_grid[NO_OF_PHASES] = {1.0, 1.0, 1.0};
 
-// phaseCal is used to alter the phase of the voltage waveform relative to the
-// current waveform. The algorithm interpolates between the most recent pair
-// of voltage samples according to the value of phaseCal.
-//
-//    With phaseCal = 1, the most recent sample is used.
-//    With phaseCal = 0, the previous sample is used
-//    With phaseCal = 0.5, the mid-point (average) value in used
-//
-// Values outside the 0 to 1 range involve extrapolation, rather than interpolation
-// and are not recommended. By altering the order in which V and I samples are
-// taken, and for how many loops they are stored, it should always be possible to
-// arrange for the optimal value of phaseCal to lie within the range 0 to 1. When
-// measuring a resistive load, the voltage and current waveforms should be perfectly
-// aligned. In this situation, the calculated Power Factor will be 1.
-//
 const float phaseCal[NO_OF_PHASES] = {1.0, 1.0, 1.0}; // <- nominal values only
 int phaseCal_int[NO_OF_PHASES];                       // to avoid the need for floating-point maths
 
@@ -171,10 +116,6 @@ void setup()
   DCoffset_V_min = (long)(512L - 100) * 256; // mid-point of ADC minus a working margin
   DCoffset_V_max = (long)(512L + 100) * 256; // mid-point of ADC plus a working margin
 
-  Serial.print("ADC mode:       ");
-  Serial.print(ADC_TIMER_PERIOD);
-  Serial.println(" uS fixed timer");
-
   // Set up the ADC to be triggered by a hardware timer of fixed duration
   ADCSRA = (1 << ADPS0) + (1 << ADPS1) + (1 << ADPS2); // Set the ADC's clock to system clock / 128
   ADCSRA |= (1 << ADEN);                               // Enable ADC
@@ -183,17 +124,6 @@ void setup()
   Timer1.attachInterrupt(timerIsr);    // declare timerIsr() as interrupt service routine
 }
 
-// An Interrupt Service Routine is now defined in which the ADC is instructed to
-// measure each analogue input in sequence. A "data ready" flag is set after each
-// voltage conversion has been completed.
-//   For each set of samples, the two samples for current  are taken before the one
-// for voltage. This is appropriate because each waveform current is generally slightly
-// advanced relative to the waveform for voltage. The data ready flag is cleared
-// within loop().
-//   This Interrupt Service Routine is for use when the ADC is fixed timer mode. It is
-// executed whenever the ADC timer expires. In this mode, the next ADC conversion is
-// initiated from within this ISR.
-//
 void timerIsr(void)
 {
   static byte sample_index = 0;
@@ -220,12 +150,6 @@ void timerIsr(void)
   }
 }
 
-// When using interrupt-based logic, the main processor waits in loop() until the
-// dataReady flag has been set by the ADC. Once this flag has been set, the main
-// processor clears the flag and proceeds with all the processing for one set of
-// V & I samples. It then returns to loop() to wait for the next set to become
-// available.
-//
 void loop()
 {
   if (dataReady) // flag is set after every set of ADC conversions
