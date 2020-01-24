@@ -83,15 +83,14 @@ int phaseCal_int[NO_OF_PHASES];
 
 void setup()
 {
+  delay(delayBeforeSerialStarts * 1000); // allow time to open Serial monitor
+  Serial.begin(9600);
+  delay(1000);
   pinMode(outputForLED, OUTPUT);
   delay(100);
   LED_state = LED_ON;                    // to mimic the behaviour of an electricity
   digitalWrite(outputForLED, LED_state); // meter which starts up in 'sleep' mode
 
-  delay(delayBeforeSerialStarts * 1000); // allow time to open Serial monitor
-
-  Serial.begin(9600);
- 
   // When using integer maths, the SIZE of the ENERGY BUCKET is altered to match the
   // scaling of the energy detection mechanism that is in use. This avoids the need
   // to re-scale every energy contribution, thus saving processing time. This process
