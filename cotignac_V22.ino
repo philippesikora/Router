@@ -1,12 +1,11 @@
-/*
- * cotignac_22.ino
- * To be changed: 
- * line 86: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
- * line 87:                                                         {0, 0},  /**< force config for load #2 */
- * line 88:                                                         {0, 0}}; /**< force config for load #3 */
- * line 63 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
- * line 121: constexpr OutputModes outputMode{OutputModes::NORMAL}; /**< Output mode to be used */
- */
+
+// * cotignac_22.ino
+// * line 86: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
+// * line 87:                                                         {0, 0},  /**< force config for load #2 */
+// * line 88:                                                         {0, 0}}; /**< force config for load #3 */
+// * line 63 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
+// * line 121: constexpr OutputModes outputMode{OutputModes::NORMAL}; /**< Output mode to be used */
+
 
 #include <Arduino.h> // may not be needed, but it's probably a good idea to include this
 
