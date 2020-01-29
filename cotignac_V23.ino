@@ -5,7 +5,7 @@
 // * line 84:                                                         {0, 0},  /**< force config for load #2 */
 // * line 85:                                                         {0, 0}}; /**< force config for load #3 */
 // * line 60 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
-// * line 119: constexpr OutputModes outputMode{OutputModes::NORMAL}; /**< Output mode to be used */
+// * line 119: constexpr OutputModes outputMode{OutputModes::NORMAL};          /**< Output mode to be used */
 
 #include <Arduino.h> // may not be needed, but it's probably a good idea to include this
 
