@@ -1,95 +1,10 @@
-/**
- * @file Mk2_3phase_RFdatalog_temp_1.ino
- * @author Robin Emley (www.Mk2PVrouter.co.uk)
- * @author Frederic Metrich (frederic.metrich@live.fr)
- * @brief Mk2_3phase_RFdatalog_temp_1.ino - A photovoltaïc energy diverter.
- * @date 2020-01-14
- * 
- * @mainpage A 3-phase photovoltaïc router/diverter
- * 
- * @section description Description
- * Mk2_3phase_RFdatalog_temp_1.ino - Arduino program that maximizes the use of home photovoltaïc production
- * by monitoring energy consumption and diverting power to one or more resistive charge(s) when needed.
- * In the absence of such a system, surplus energy flows away to the grid and is of no benefit to the PV-owner.
- * 
- * @section history History
- * __Issue 1 was released in January 2015.__
- *
- * This sketch provides continuous monitoring of real power on three phases.
- * Surplus power is diverted to multiple loads in sequential order. A suitable
- * output-stage is required for each load; this can be either triac-based, or a
- * Solid State Relay.
- *
- * Datalogging of real power and Vrms is provided for each phase.
- * The presence or absence of the RFM12B needs to be set at compile time
- *
- * __January 2016, renamed as Mk2_3phase_RFdatalog_2 with these changes:__
- * - Improved control of multiple loads has been imported from the
- *     equivalent 1-phase sketch, Mk2_multiLoad_wired_6.ino
- * - the ISR has been upgraded to fix a possible timing anomaly
- * - variables to store ADC samples are now declared as "volatile"
- * - for RF69 RF module is now supported
- * - a performance check has been added with the result being sent to the Serial port
- * - control signals for loads are now active-high to suit the latest 3-phase PCB
- *
- * __February 2016, renamed as Mk2_3phase_RFdatalog_3 with these changes:__
- * - improvements to the start-up logic. The start of normal operation is now
- *    synchronized with the start of a new mains cycle.
- * - reduce the amount of feedback in the Low Pass Filter for removing the DC content
- *     from the Vsample stream. This resolves an anomaly which has been present since
- *     the start of this project. Although the amount of feedback has previously been
- *     excessive, this anomaly has had minimal effect on the system's overall behaviour.
- * - The reported power at each of the phases has been inverted. These values are now in
- *     line with the Open Energy Monitor convention, whereby import is positive and
- *     export is negative.
- *
- *      Robin Emley
- *      www.Mk2PVrouter.co.uk
- *
- * __October 2019, renamed as Mk2_3phase_RFdatalog_temp_1 with these changes:__
- * - This sketch has been restructured in order to make better use of the ISR.
- * - All of the time-critical code is now contained within the ISR and its helper functions.
- * - Values for datalogging are transferred to the main code using a flag-based handshake mechanism.
- * - The diversion of surplus power can no longer be affected by slower
- * activities which may be running in the main code such as Serial statements and RF.
- * - Temperature sensing is supported. A pullup resistor (4K7 or similar) is required for the Dallas sensor.
- * - The output mode, i.e. NORMAL or ANTI_FLICKER, is now set at compile time.
- * - Also:
- *   - The ADC is now in free-running mode, at ~104 µs per conversion.
- *   - a persistence check has been added for zero-crossing detection (polarityConfirmed)
- *   - a lowestNoOfSampleSetsPerMainsCycle check has been added, to detect any disturbances
- *   - Vrms has been added to the datalog payload (as Vrms x 100)
- *   - temperature has been added to the datalog payload (as degrees C x 100)
- *   - the phaseCal/f_voltageCal mechanism has been modified to be the same for all phases
- *   - RF capability made switchable so that the code will continue to run
- *     when an RF module is not fitted. Dataloging can then take place via the Serial port.
- *   - temperature capability made switchable so that the code will continue to run w/o sensor.
- *   - priority pin changed to handle peak/off-peak tariff
- *   - add rotating load priorities: this sketch is intended to control a 3-phase
- *     water heater which is composed of 3 independent heating elements wired in WYE
- *     with a neutral wire. The router will control each element in a specific order.
- *     To ensure that in average (over many days/months), each load runs the same time,
- *     each day, the router will rotate the priorities.
- *   - most functions have been splitted in one or more sub-functions. This way, each function
- *     has a specific task and is much smaller than before.
- *   - renaming of most of the variables with a single-letter prefix to identify its type.
- *   - direct port manipulation to save code size and speed-up performance
- *
- * __January 2020, changes:__
- * - This sketch has been again re-engineered. All 'defines' have been removed except
- *   the ones for compile-time optional functionalities.
- * - All constants have been replaced with constexpr initialized at compile-time
- * - all number-types have been replaced with fixed width number types
- * - old fashion enums replaced by scoped enums with fixed types
- * - off-peak tariff made switchable at compile-time
- * - rotation of load priorities made switcheable at compile-time
- * - enhanced configuration for forcing specific loads during off-peak period
- * 
- *   Fred Metrich
- *  
- * @copyright Copyright (c) 2020
- * 
- */
+// * cotignac_24.ino
+// * line 61 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
+// * line 84: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
+// * line 85:                                                         {0, 0},  /**< force config for load #2 */
+// * line 86:                                                         {0, 0}}; /**< force config for load #3 */
+// * line 120: constexpr OutputModes outputMode{OutputModes::NORMAL};          /**< Output mode to be used */
+
 
 #include <Arduino.h> // may not be needed, but it's probably a good idea to include this
 
@@ -143,7 +58,7 @@ constexpr uint16_t BAD_TEMPERATURE{30000}; /**< this value (300C) is sent if no 
 #endif
 
 #ifdef OFF_PEAK_TARIFF
-#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
+//#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
 
 constexpr uint32_t ul_OFF_PEAK_DURATION{8ul}; /**< Duration of the off-peak period in hours */
 
@@ -166,9 +81,9 @@ public:
   uint8_t uiDuration{0};  /**< the duration for forcing the load in hours */
 };
 
-constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{-3, UINT8_MAX},  /**< force config for load #1 */
-                                                         {-3, UINT8_MAX},  /**< force config for load #2 */
-                                                         {-3, UINT8_MAX}}; /**< force config for load #3 */
+constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
+                                                         {0, 0},  /**< force config for load #2 */
+                                                         {0, 0}}; /**< force config for load #3 */
 #endif
 
 // -------------------------------
@@ -202,7 +117,7 @@ constexpr uint8_t loadStateMask{0x7FU};  /**< bit mask for masking load state */
 LoadStates physicalLoadState[NO_OF_DUMPLOADS]; /**< Physical state of the loads */
 uint16_t countLoadON[NO_OF_DUMPLOADS];         /**< Number of cycle the load was ON (over 1 datalog period) */
 
-constexpr OutputModes outputMode{OutputModes::ANTI_FLICKER}; /**< Output mode to be used */
+constexpr OutputModes outputMode{OutputModes::NORMAL}; /**< Output mode to be used */
 
 // Load priorities at startup
 uint8_t loadPrioritiesAndState[NO_OF_DUMPLOADS]{0, 1, 2}; /**< load priorities and states. */
