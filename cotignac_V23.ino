@@ -1,4 +1,6 @@
+
 // * cotignac_23.ino
+
 // * line 83: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
 // * line 84:                                                         {0, 0},  /**< force config for load #2 */
 // * line 85:                                                         {0, 0}}; /**< force config for load #3 */
@@ -1021,7 +1023,7 @@ void printDataLogging()
   }
   
   Serial.print(R"(,"OFF_PEAK_TARIFF":)");
-  Serial.print(pinOffPeakState);
+  Serial.print(checkLoadPrioritySelection());
   
   Serial.println(F("}"));
 #endif
