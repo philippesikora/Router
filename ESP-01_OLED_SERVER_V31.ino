@@ -369,7 +369,7 @@ int pulse_1() // fonction GET index compteur Cumulus
   if (httpCode > 0) // httpCode will be negative on error. HTTP header has been send and Server response header has been handled
   { 
     String payload = http.getString();
-    String xml = xmlTakeParam(payload,"INDEX1"); 
+    String xml = xmlTakeParam(payload,"PULSE1"); 
     return xml.toInt(); //Converts string to int
      
   } else {
