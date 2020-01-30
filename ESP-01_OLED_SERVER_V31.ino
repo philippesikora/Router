@@ -247,7 +247,9 @@ void oled_display () {
       oled.print (p_routed);
       oled.println ("W"); 
       oled.print ("RT= ");               // Routing
-      oled.println ("CUMULUS");   
+      oled.print ("CU ");
+      oled.print (LOAD_0);  
+      oled.println ("%");   
     }
 
    if ((LOAD_2 == 100) || (LOAD_2 > 0)) {
