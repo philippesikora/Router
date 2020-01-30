@@ -121,7 +121,7 @@ String SendHTML(int ACTIVE_POWER,int L1,int L2,int L3,int p_routed,String routin
   ptr +="</div>";
   ptr +="<div class='side-by-side text'>ACTIVE POWER</div>";
   ptr +="<div class='side-by-side reading'>";
-  ptr +=(int16_t)ACTIVE_POWER;
+  ptr +=(int)ACTIVE_POWER;
   ptr +="<span class='superscript'>W</span></div>";
   ptr +="</div>";
   ptr +="<div class='data L1'>";
