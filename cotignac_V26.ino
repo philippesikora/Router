@@ -1,4 +1,4 @@
-// * cotignac_24.ino
+// * cotignac_26.ino
 // * line 60 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
 // * line 83: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
 // * line 84:                                                         {0, 0},   /**< force config for load #2 */
@@ -1001,35 +1001,28 @@ void printDataLogging(bool bOffPeak)
   Serial.println(F(")"));
 
 #else
-  Serial.print(F("{"));
-  for (phase = 0; phase < NO_OF_PHASES; ++phase)
-  {
-    Serial.print(F(R"("L)"));
-    Serial.print(phase + 1);
-    Serial.print(F(R"(": )"));
-    Serial.print(tx_data.power_L[phase]);
-    Serial.print(F(", "));
-  }
+  Serial.print(R"({"L1":)");
+  Serial.print(tx_data.power_L[0]);
 
-  for (uint8_t i = 0; i < NO_OF_DUMPLOADS; ++i)
-  {
-    Serial.print(F(R"("LOAD_)"));
-    Serial.print(i + 1);
-    Serial.print(F(R"(": ")"));
-    Serial.print((100 * copyOf_countLoadON[i]) / copyOf_sampleSetsDuringThisDatalogPeriod);
-    Serial.print(F(R"(")"));
-#ifndef OFF_PEAK_TARIFF
-    if (NO_OF_DUMPLOADS != (i + 1)) // no ',' for last item
-#endif
-      Serial.print(F(", "));
-  }
+  Serial.print(R"(,"L2":)");
+  Serial.print(tx_data.power_L[1]);
 
-#ifdef OFF_PEAK_TARIFF
-  Serial.print(F(R"("OFF_PEAK_TARIFF": )"));
-  Serial.print(bOffPeak ? F("true") : F("false"));
-#endif
-
-  Serial.println(F("}"));
+  Serial.print(R"(,"L3":)");
+  Serial.print(tx_data.power_L[2]);
+   
+  Serial.print(R"(,"LOAD_0":)");
+  Serial.print((100 * copyOf_countLoadON[0]) / copyOf_sampleSetsDuringThisDatalogPeriod);
+   
+  Serial.print(R"(,"LOAD_1":)");
+  Serial.print((100 * copyOf_countLoadON[1]) / copyOf_sampleSetsDuringThisDatalogPeriod);
+   
+  Serial.print(R"(,"LOAD_2":)");
+  Serial.print((100 * copyOf_countLoadON[2]) / copyOf_sampleSetsDuringThisDatalogPeriod);
+  
+  Serial.print(F(R"("OFF_PEAK_TARIFF": )");
+  Serial.print(bOffPeak ? F("true") : F("false"));        
+   
+  Serial.println("}");
 #endif
 }
 
