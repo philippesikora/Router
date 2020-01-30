@@ -1019,7 +1019,7 @@ void printDataLogging(bool bOffPeak)
   Serial.print(R"(,"LOAD_2":)");
   Serial.print((100 * copyOf_countLoadON[2]) / copyOf_sampleSetsDuringThisDatalogPeriod);
   
-  Serial.print(F(R"("OFF_PEAK_TARIFF": )");
+  Serial.print(R"(,"OFF_PEAK_TARIFF":)");
   Serial.print(bOffPeak ? F("true") : F("false"));        
    
   Serial.println("}");
