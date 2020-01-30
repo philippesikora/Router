@@ -186,7 +186,7 @@ String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int16_t p_
   ptr +="</div>";
   ptr +="<div class='side-by-side text'>P_routed</div>";
   ptr +="<div class='side-by-side reading'>";
-  ptr +=(int)p_routed;
+  ptr +=(int16_t)p_routed;
   ptr +="<span class='superscript'>Wh</span></div>";
   ptr +="</div>";
 
