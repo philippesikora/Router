@@ -246,7 +246,7 @@ void oled_display () {
       oled.print ("PR= ");               // P_routed
       oled.print (p_routed);
       oled.println ("W"); 
-      oled.print ("RT= ");               // Routing
+      oled.print ("RT= ");               // Routing RT= CU 100%
       oled.print ("CU ");
       oled.print (LOAD_0);  
       oled.println ("%");   
