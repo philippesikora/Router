@@ -1,4 +1,9 @@
-
+// * cotignac_24.ino
+// * line 60 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
+// * line 83: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
+// * line 84:                                                         {0, 0},   /**< force config for load #2 */
+// * line 85:                                                         {0, 0}};  /**< force config for load #3 */
+// * line 119: constexpr OutputModes outputMode{OutputModes::NORMAL};           /**< Output mode to be used */
 
 #include <Arduino.h> // may not be needed, but it's probably a good idea to include this
 
@@ -52,7 +57,7 @@ constexpr uint16_t BAD_TEMPERATURE{30000}; /**< this value (300C) is sent if no 
 #endif
 
 #ifdef OFF_PEAK_TARIFF
-#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
+//#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
 
 constexpr uint32_t ul_OFF_PEAK_DURATION{8ul}; /**< Duration of the off-peak period in hours */
 
@@ -75,9 +80,9 @@ public:
   uint8_t uiDuration{0};  /**< the duration for forcing the load in hours */
 };
 
-constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{-3, UINT8_MAX},  /**< force config for load #1 */
-                                                         {-3, UINT8_MAX},  /**< force config for load #2 */
-                                                         {-3, UINT8_MAX}}; /**< force config for load #3 */
+constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
+                                                         {0, 0},  /**< force config for load #2 */
+                                                         {0, 0}}; /**< force config for load #3 */
 #endif
 
 // -------------------------------
@@ -111,7 +116,7 @@ constexpr uint8_t loadStateMask{0x7FU};  /**< bit mask for masking load state */
 LoadStates physicalLoadState[NO_OF_DUMPLOADS]; /**< Physical state of the loads */
 uint16_t countLoadON[NO_OF_DUMPLOADS];         /**< Number of cycle the load was ON (over 1 datalog period) */
 
-constexpr OutputModes outputMode{OutputModes::ANTI_FLICKER}; /**< Output mode to be used */
+constexpr OutputModes outputMode{OutputModes::NORMAL}; /**< Output mode to be used */
 
 // Load priorities at startup
 uint8_t loadPrioritiesAndState[NO_OF_DUMPLOADS]{0, 1, 2}; /**< load priorities and states. */
