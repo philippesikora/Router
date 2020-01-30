@@ -1020,8 +1020,9 @@ void printDataLogging(bool bOffPeak)
   Serial.print((100 * copyOf_countLoadON[2]) / copyOf_sampleSetsDuringThisDatalogPeriod);
   
   Serial.print(R"(,"OFF_PEAK_TARIFF":)");
-  Serial.print(bOffPeak ? F("true") : F("false"));        
-   
+  Serial.print(tx_data.power_L[1]);                  // uniquement pour essai, ça Fonctionne
+  //Serial.print(bOffPeak ? F("true") : F("false")); // ne marche pas => JSON ERROR  
+                                                     // problème avec bOffPeak ? F("true") : F("false")  ???     
   Serial.println("}");
 #endif
 }
