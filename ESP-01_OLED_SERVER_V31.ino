@@ -58,7 +58,7 @@ SSD1306AsciiWire oled;
 //                                    HTML * AJAX [START]                                          //
 //************************************************************************************************//
 
-String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int p_routed,String routing){
+String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int16_t p_routed,String routing){
   String ptr = "<!DOCTYPE html>";
   ptr +="<html>";
   ptr +="<head>";
