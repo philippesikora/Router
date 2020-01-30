@@ -1,4 +1,4 @@
-// * cotignac_26.ino
+// * cotignac_27.ino
 // * line 60 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
 // * line 83: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
 // * line 84:                                                         {0, 0},   /**< force config for load #2 */
