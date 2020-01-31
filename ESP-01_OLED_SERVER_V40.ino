@@ -330,7 +330,7 @@ void parsing_json () {
   LOAD_0= jsonBuffer["LOAD_0"];           // LOAD_0 information
   LOAD_1= jsonBuffer["LOAD_1"];           // LOAD_1 information
   LOAD_2= jsonBuffer["LOAD_2"];           // LOAD_2 information
-  TARIFF= jsonBuffer["OFF_PEAK_TARIFF"];  // OFF_PEAK_TARIFF
+  TARIFF= jsonBuffer["TARIFF"];           // OFF_PEAK_TARIFF
 
   //myBroker.publish("broker/ACTIVE_POWER", (String)ACTIVE_POWER);   // need to convert to String to publish on MQTT 
   
@@ -503,14 +503,14 @@ void loop() {
     // true if off-peak tariff (HC) is active
     // false if on-peak tariff (HP) is active
 
-      if ((OFF_PEAK_TARIFF == false) && (latch == true)) // détection on-peak tariff (HP)
+      if ((TARIFF == false) && (latch == true)) // détection on-peak tariff (HP)
         {
         oled_index_display();
         ref_index=pulse_1();   // store ref_index
         latch=false; 
         }                      // on-peak tariff (HP) is active
 
-      if ((OFF_PEAK_TARIFF == false) && (latch == false))  // if on-peak tariff (HP)
+      if ((TARIFF == false) && (latch == false))  // if on-peak tariff (HP)
         { 
         oled_index_display();
         current_index=pulse_1();
