@@ -1007,7 +1007,8 @@ void printDataLogging(bool bOffPeak)
 
 #else
   StaticJsonDocument<200> doc;
-  char strPhase[]{"L1"};
+  //char strPhase[]{"L0"}; 
+  char strPhase[]{"L1"};   // modify L0 => L1
   char strLoad[]{"LOAD_0"};
 
   for (phase = 0; phase < NO_OF_PHASES; ++phase)
@@ -1023,6 +1024,7 @@ void printDataLogging(bool bOffPeak)
   }
 
 #ifdef OFF_PEAK_TARIFF
+  //doc["OFF_PEAK_TARIFF"] = bOffPeak ? true : false;  // bug with "OFF_PEAK_TARIFF" label
   doc["TARIFF"] = bOffPeak ? true : false;
 #endif
 
