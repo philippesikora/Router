@@ -31,17 +31,17 @@ unsigned long startTime_OLED;
 String phases_info;
 String routing="NO ACTIVE";
 
-int16_t i=0; 
-int16_t L1=0; 
-int16_t L2=0;
-int16_t L3=0;
+int i=0; 
+int L1=0; 
+int L2=0;
+int L3=0;
 int16_t ACTIVE_POWER=0;
 
 int p_routed=0;       // p_routed
 
-int16_t LOAD_0=0;
-int16_t LOAD_1=0;
-int16_t LOAD_2=0;
+int LOAD_0=0;
+int LOAD_1=0;
+int LOAD_2=0;
 
 
 char json[bufferSize];
@@ -54,7 +54,7 @@ SSD1306AsciiWire oled;
 //                                    HTML * AJAX [START]                                          //
 //************************************************************************************************//
 
-String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int p_routed,String routing){
+String SendHTML(int ACTIVE_POWER,int L1,int L2,int L3,int p_routed,String routing){
   String ptr = "<!DOCTYPE html>";
   ptr +="<html>";
   ptr +="<head>";
@@ -117,7 +117,7 @@ String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int p_rout
   ptr +="</div>";
   ptr +="<div class='side-by-side text'>ACTIVE POWER</div>";
   ptr +="<div class='side-by-side reading'>";
-  ptr +=(int16_t)ACTIVE_POWER;
+  ptr +=(int)ACTIVE_POWER;
   ptr +="<span class='superscript'>W</span></div>";
   ptr +="</div>";
   ptr +="<div class='data L1'>";
@@ -133,7 +133,7 @@ String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int p_rout
   ptr +="</div>";
   ptr +="<div class='side-by-side text'>L1</div>";
   ptr +="<div class='side-by-side reading'>";
-  ptr +=(int16_t)L1;
+  ptr +=(int)L1;
   ptr +="<span class='superscript'>W</span></div>";
   ptr +="</div>";
   ptr +="<div class='data L2'>";
@@ -149,7 +149,7 @@ String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int p_rout
   ptr +="</div>";
   ptr +="<div class='side-by-side text'>L2</div>";
   ptr +="<div class='side-by-side reading'>";
-  ptr +=(int16_t)L2;
+  ptr +=(int)L2;
   ptr +="<span class='superscript'>W</span></div>";
   ptr +="</div>";
   ptr +="<div class='data L3'>";
@@ -165,7 +165,7 @@ String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int p_rout
   ptr +="</div>";
   ptr +="<div class='side-by-side text'>L3</div>";
   ptr +="<div class='side-by-side reading'>";
-  ptr +=(int16_t)L3;
+  ptr +=(int)L3;
   ptr +="<span class='superscript'>W</span></div>";
   ptr +="</div>";
 
