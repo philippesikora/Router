@@ -1214,7 +1214,7 @@ void setup()
   Serial.println();
   Serial.println();
   Serial.println(F("----------------------------------"));
-  Serial.println(F("Sketch ID:  Mk2_3phase_RFdatalog_temp_1.ino"));
+  Serial.println(F("cotignac_V30.ino"));
 #endif
 
   // initializes all loads to OFF at startup
