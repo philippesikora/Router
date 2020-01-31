@@ -46,7 +46,7 @@ int current_index=0;
 int p_routed=0;       // p_routed
 
 bool latch=true;
-bool OFF_PEAK_TARIFF=true;
+bool TARIFF=true;
 
 char json[bufferSize];
 
@@ -322,15 +322,15 @@ void parsing_json () {
     delay(3000);   
    }
 
-  else {                                           // if JSON parsing OK then get L1, L2 and L3 values
-  L1= jsonBuffer["L1"];                            // L1 active power
-  L2= jsonBuffer["L2"];                            // L2 active power
-  L3= jsonBuffer["L3"];                            // L3 active power
-  ACTIVE_POWER= L1 + L2 + L3;                      // Total active power
-  LOAD_0= jsonBuffer["LOAD_0"];                    // LOAD_0 information
-  LOAD_1= jsonBuffer["LOAD_1"];                    // LOAD_1 information
-  LOAD_2= jsonBuffer["LOAD_2"];                    // LOAD_2 information
-  OFF_PEAK_TARIFF= jsonBuffer["OFF_PEAK_TARIFF"];  // OFF_PEAK_TARIFF
+  else {                                  // if JSON parsing OK then get L1, L2 and L3 values
+  L1= jsonBuffer["L1"];                   // L1 active power
+  L2= jsonBuffer["L2"];                   // L2 active power
+  L3= jsonBuffer["L3"];                   // L3 active power
+  ACTIVE_POWER= L1 + L2 + L3;             // Total active power
+  LOAD_0= jsonBuffer["LOAD_0"];           // LOAD_0 information
+  LOAD_1= jsonBuffer["LOAD_1"];           // LOAD_1 information
+  LOAD_2= jsonBuffer["LOAD_2"];           // LOAD_2 information
+  TARIFF= jsonBuffer["OFF_PEAK_TARIFF"];  // OFF_PEAK_TARIFF
 
   //myBroker.publish("broker/ACTIVE_POWER", (String)ACTIVE_POWER);   // need to convert to String to publish on MQTT 
   
@@ -507,15 +507,18 @@ void loop() {
         {
         oled_index_display();
         ref_index=pulse_1();   // store ref_index
-        latch=false; }        // on-peak tariff (HP) is active
+        latch=false; 
+        }                      // on-peak tariff (HP) is active
 
       if ((OFF_PEAK_TARIFF == false) && (latch == false))  // if on-peak tariff (HP)
         { 
         oled_index_display();
         current_index=pulse_1();
         p_routed= (current_index - ref_index);} // calculation p_routed during on-peak tariff (HP)
+        
       else {
-        latch=true; } // off-peak tariff (HC) is active
+        latch=true; 
+      } // off-peak tariff (HC) is active
                                
            
     startTime_p_routed = millis(); // new startTime value
