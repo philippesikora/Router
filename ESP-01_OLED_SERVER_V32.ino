@@ -292,9 +292,9 @@ void oled_display () {
 void parsing_json () {
   StaticJsonBuffer<200> jsonBuffer;
   //char json[] = "{\"L1\":30,\"L2\":40,\"L3\":100,\"LOAD_0\":0,\"LOAD_1\":0,\"LOAD_2\":1}";  //pour les tests
-  phases_info=String(json);
+  //phases_info=String(json);
   //JsonObject& object = jsonBuffer.parseObject(phases_info);
-  DeserializationError error = deserializeJson(jsonBuffer, phases_info);
+  DeserializationError error = deserializeJson(jsonBuffer, json);
   
   //if (!object.success()) {
   if (error) {
