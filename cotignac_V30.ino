@@ -1,4 +1,4 @@
-// * cotignac_27.ino
+// * cotignac_30.ino
 // * line 60 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
 // * line 83: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
 // * line 84:                                                         {0, 0},   /**< force config for load #2 */
@@ -13,7 +13,7 @@
 
 //#define RF_PRESENT ///< this line must be commented out if the RFM12B module is not present
 
-//#define NO_OUTPUT ///< this line can be commented out if "debuging" output is needed
+#define NO_OUTPUT ///< this line can be commented out if "debuging" output is needed
 
 #define DATALOG_OUTPUT ///< this line can be commented if no datalogging is needed
 
@@ -1019,10 +1019,10 @@ void printDataLogging(bool bOffPeak)
   Serial.print(R"(,"LOAD_2":)");
   Serial.print((100 * copyOf_countLoadON[2]) / copyOf_sampleSetsDuringThisDatalogPeriod);
   
-  Serial.print(R"(,"OFF_PEAK_TARIFF":)");
-  Serial.print(tx_data.power_L[1]);                  // uniquement pour essai, ça Fonctionne
-  //Serial.print(bOffPeak ? F("true") : F("false")); // ne marche pas => JSON ERROR  
-                                                     // problème avec bOffPeak ? F("true") : F("false")  ???     
+  Serial.print(R"(,"OFF":)");
+  //Serial.print(tx_data.power_L[1]);                  // uniquement pour essai, ça Fonctionne
+  Serial.print(bOffPeak ? F("true") : F("false"));     // ne marche pas => JSON ERROR  
+                                                      //  problème avec bOffPeak ? F("true") : F("false")  ???     
   Serial.println("}");
 #endif
 }
