@@ -293,9 +293,11 @@ void parsing_json () {
   StaticJsonBuffer<200> jsonBuffer;
   //char json[] = "{\"L1\":30,\"L2\":40,\"L3\":100,\"LOAD_0\":0,\"LOAD_1\":0,\"LOAD_2\":1}";  //pour les tests
   phases_info=String(json);
-  JsonObject& object = jsonBuffer.parseObject(phases_info);
+  //JsonObject& object = jsonBuffer.parseObject(phases_info);
+  DeserializationError error = deserializeJson(jsonBuffer, phases_info);
   
-  if (!object.success()) {
+  //if (!object.success()) {
+  if (error) {
     L1=999;L2=999;L3=999;ACTIVE_POWER=999; routing="ERROR JSON"; // if parsing failed L1=999;L2=999;L3=999;
     oled.setFont ( System5x7 );
     oled.clear ( );
@@ -307,14 +309,20 @@ void parsing_json () {
     delay(3000);   
    }
 
-  else {                       // if JSON parsing OK then get L1, L2 and L3 values
-  L1= object["L1"];            // L1 active power
-  L2= object["L2"];            // L2 active power
-  L3= object["L3"];            // L3 active power
-  ACTIVE_POWER= L1 + L2 + L3;  // Total active power
-  LOAD_0= object["LOAD_0"];    // LOAD_0 information
-  LOAD_1= object["LOAD_1"];    // LOAD_1 information
-  LOAD_2= object["LOAD_2"];    // LOAD_2 information
+  else {                         // if JSON parsing OK then get L1, L2 and L3 values
+  //L1= object["L1"];            // L1 active power
+  L1= jsonBuffer["L1"];          // L1 active power
+  //L2= object["L2"];            // L2 active power
+  L2= jsonBuffer["L2"];          // L2 active power
+  //L3= object["L3"];            // L3 active power
+  L3= jsonBuffer["L3"];          // L3 active power
+  ACTIVE_POWER= L1 + L2 + L3;    // Total active power
+  //LOAD_0= object["LOAD_0"];    // LOAD_0 information
+  LOAD_0= jsonBuffer["LOAD_0"];  // LOAD_0 information
+  //LOAD_1= object["LOAD_1"];    // LOAD_1 information
+  LOAD_1= jsonBuffer["LOAD_1"];  // LOAD_1 information
+  //LOAD_2= object["LOAD_2"];    // LOAD_2 information
+  LOAD_2= jsonBuffer["LOAD_2"];  // LOAD_2 information
 
   //myBroker.publish("broker/ACTIVE_POWER", (String)ACTIVE_POWER);   // need to convert to String to publish on MQTT 
   
