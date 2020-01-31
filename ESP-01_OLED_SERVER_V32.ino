@@ -35,7 +35,7 @@ int i=0;
 int L1=0; 
 int L2=0;
 int L3=0;
-int16_t ACTIVE_POWER=0;
+int ACTIVE_POWER=0;
 
 int p_routed=0;       // p_routed
 
