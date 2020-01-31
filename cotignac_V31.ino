@@ -1023,7 +1023,7 @@ void printDataLogging(bool bOffPeak)
   }
 
 #ifdef OFF_PEAK_TARIFF
-  doc["OFF_PEAK_TARIFF"] = bOffPeak ? true : false;
+  doc["TARIFF"] = bOffPeak ? true : false;
 #endif
 
   // Generate the minified JSON and send it to the Serial port.
@@ -1222,7 +1222,7 @@ void setup()
   Serial.println();
   Serial.println();
   Serial.println(F("----------------------------------"));
-  Serial.println(F("cotignac_V31.ino"));
+  Serial.println(F("cotignac_V32.ino"));
 #endif
 
   // initializes all loads to OFF at startup
