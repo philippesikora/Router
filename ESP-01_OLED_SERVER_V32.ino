@@ -310,18 +310,12 @@ void parsing_json () {
    }
 
   else {                         // if JSON parsing OK then get L1, L2 and L3 values
-  //L1= object["L1"];            // L1 active power
   L1= jsonBuffer["L1"];          // L1 active power
-  //L2= object["L2"];            // L2 active power
   L2= jsonBuffer["L2"];          // L2 active power
-  //L3= object["L3"];            // L3 active power
   L3= jsonBuffer["L3"];          // L3 active power
   ACTIVE_POWER= L1 + L2 + L3;    // Total active power
-  //LOAD_0= object["LOAD_0"];    // LOAD_0 information
   LOAD_0= jsonBuffer["LOAD_0"];  // LOAD_0 information
-  //LOAD_1= object["LOAD_1"];    // LOAD_1 information
   LOAD_1= jsonBuffer["LOAD_1"];  // LOAD_1 information
-  //LOAD_2= object["LOAD_2"];    // LOAD_2 information
   LOAD_2= jsonBuffer["LOAD_2"];  // LOAD_2 information
 
   //myBroker.publish("broker/ACTIVE_POWER", (String)ACTIVE_POWER);   // need to convert to String to publish on MQTT 
