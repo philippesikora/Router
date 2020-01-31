@@ -300,7 +300,7 @@ void parsing_json () {
   //char json[] = "{\"L1\":30,\"L2\":40,\"L3\":100,\"LOAD_0\":0,\"LOAD_1\":0,\"LOAD_2\":1}";  //pour les tests
   DeserializationError error = deserializeJson(jsonBuffer, json);
   
-  if (!object.success()) {
+  if (error) { 
     L1=999;L2=999;L3=999;ACTIVE_POWER=999; routing="ERROR JSON"; // if parsing failed L1=999;L2=999;L3=999;
     oled.setFont ( System5x7 );
     oled.clear ( );
