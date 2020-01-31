@@ -231,7 +231,17 @@ void handle_NotFound(){
   server.send(404, "text/plain", "Not found");
 }
 
-void oled_display () {
+void oled_index_display() {
+    oled.setFont ( System5x7 );
+    oled.clear ( );
+    oled.set2X ( );
+    oled.println ("***********"); 
+    oled.println ("* GET WES *");
+    oled.println ("* INDEX.. *");
+    oled.println ("***********");
+}
+
+void oled_display() {
     if ((LOAD_0 == 100) || (LOAD_0 > 0)) {
       routing = "Cumulus";
       oled.setFont ( System5x7 );
@@ -495,11 +505,13 @@ void loop() {
 
       if ((OFF_PEAK_TARIFF == false) && (latch == true)) // détection on-peak tariff (HP)
         {
+        oled_index_display();
         ref_index=pulse_1();   // store ref_index
         latch=false; }        // on-peak tariff (HP) is active
 
       if ((OFF_PEAK_TARIFF == false) && (latch == false))  // if on-peak tariff (HP)
         { 
+        oled_index_display();
         current_index=pulse_1();
         p_routed= (current_index - ref_index);} // calculation p_routed during on-peak tariff (HP)
       else {
