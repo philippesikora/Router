@@ -2,13 +2,13 @@
 // Device: ESP01 or WEMOS D1 
 // Output L1, L2 et L3 active powers from Triphase Router 
 // Solar Rx / Tx in JSON format to OLED 128*64 and server web
-// Install SSD1306Ascii, Arduinojson 5.13.5 
+// Install SSD1306Ascii, Arduinojson 6.14.1
 
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h> 
-#include <ArduinoJson.h>             // Arduinojson 5.13.5
+#include <ArduinoJson.h>             // Arduinojson 6.14.1
 #include <ESP8266HTTPClient.h>
 
 #include <WiFiClient.h>
@@ -290,7 +290,7 @@ void oled_display () {
  
 
 void parsing_json () {
-  StaticJsonBuffer<200> jsonBuffer;
+  StaticJsonDocument<200> jsonBuffer;
   //char json[] = "{\"L1\":30,\"L2\":40,\"L3\":100,\"LOAD_0\":0,\"LOAD_1\":0,\"LOAD_2\":1}";  //pour les tests
   //phases_info=String(json);
   //JsonObject& object = jsonBuffer.parseObject(phases_info);
