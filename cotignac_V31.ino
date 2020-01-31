@@ -1007,7 +1007,7 @@ void printDataLogging(bool bOffPeak)
 
 #else
   StaticJsonDocument<200> doc;
-  char strPhase[]{"L0"};
+  char strPhase[]{"L1"};
   char strLoad[]{"LOAD_0"};
 
   for (phase = 0; phase < NO_OF_PHASES; ++phase)
@@ -1222,7 +1222,7 @@ void setup()
   Serial.println();
   Serial.println();
   Serial.println(F("----------------------------------"));
-  Serial.println(F("Sketch ID:  Mk2_3phase_RFdatalog_temp_1.ino"));
+  Serial.println(F("cotignac_V31.ino"));
 #endif
 
   // initializes all loads to OFF at startup
