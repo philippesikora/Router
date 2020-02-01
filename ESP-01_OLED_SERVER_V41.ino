@@ -440,27 +440,6 @@ void setup()
 
 void loop() {
 
-// Triphase Solar Router sends L1, L2 et L3 in JSON format
-/*  
- Serial.print("{\"L1\":");
- Serial.print(tx_data.power_L1);
- Serial.print(",\"L2\":");
- Serial.print(tx_data.power_L2);
- Serial.print(",\"L3\":");
- Serial.print(tx_data.power_L3);
-            
- Serial.print(",\"LOAD_0\":");
- Serial.print(physicalLoadState[0]);
- Serial.print(",\"LOAD_1\":");
- Serial.print(physicalLoadState[1]);
- Serial.print(",\"LOAD_2\":");
- Serial.print(physicalLoadState[2]);
- Serial.println("}");
- */
-
-// example on serial monitor in JSON format
-// "{\"L1\":30,\"L2\":40,\"L3\":100,\"LOAD_0\":0,\"LOAD_1\":0,\"LOAD_2\":1}";  //pour les tests
-
   if (WiFi.status() != WL_CONNECTED) {    // if not wifi
     reconnect();                          // try to reconnect
     }  
