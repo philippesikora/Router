@@ -38,7 +38,9 @@ int16_t L2=0;
 int16_t L3=0;
 int16_t ACTIVE_POWER=0;
 
-int16_t p_routed=0;       // p_routed
+int ref_index=0;      // Need only 2 bytes
+int current_index=0;
+int p_routed=0;       // p_routed
 
 int16_t LOAD_0=0;
 int16_t LOAD_1=0;
@@ -58,7 +60,7 @@ SSD1306AsciiWire oled;
 //                                    HTML * AJAX [START]                                          //
 //************************************************************************************************//
 
-String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int16_t p_routed,String routing){
+String SendHTML(int16_t ACTIVE_POWER,int16_t L1,int16_t L2,int16_t L3,int p_routed,String routing){
   String ptr = "<!DOCTYPE html>";
   ptr +="<html>";
   ptr +="<head>";
