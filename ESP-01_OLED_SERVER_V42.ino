@@ -231,6 +231,16 @@ void handle_NotFound(){
   server.send(404, "text/plain", "Not found");
 }
 
+void oled_index_display() {
+    oled.setFont ( System5x7 );
+    oled.clear ( );
+    oled.set2X ( );
+    oled.println ("***********"); 
+    oled.println ("* GET WES *");
+    oled.println ("* INDEX.. *");
+    oled.println ("***********");
+}
+
 void oled_display () {
     if ((LOAD_0 == 100) || (LOAD_0 > 0)) {
       routing = "Cumulus";
