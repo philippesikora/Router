@@ -509,6 +509,7 @@ void loop() {
                                
            
     startTime_p_routed = millis(); // new startTime value
+    startTime_p_routed = millis();                           // starttime_p_routed
   }
 
   
