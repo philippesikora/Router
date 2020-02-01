@@ -370,19 +370,19 @@ void reconnect() {
 
 
 
-int papp()                                         // function GET apparent power
+int pulse_1() // fonction GET index compteur Cumulus
 {
   if (WiFi.status() == WL_CONNECTED) {
   HTTPClient http;
-  http.begin("http://192.168.120.3/tic2.cgx");    // get XML file from WES
+  http.begin("http://192.168.120.3/pulse.cgx"); // get XML file from WES device
   http.setAuthorization("admin", "wes");
   int httpCode = http.GET();
    
   if (httpCode > 0) // httpCode will be negative on error. HTTP header has been send and Server response header has been handled
   { 
     String payload = http.getString();
-    String xml = xmlTakeParam(payload,"PAP"); 
-    return xml.toFloat();                         // Converts string to float
+    String xml = xmlTakeParam(payload,"PULSE1"); 
+    return xml.toInt(); //Converts string to int
      
   } else {
       return 0;
