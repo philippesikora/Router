@@ -1,4 +1,3 @@
-
 // Device: ESP01 or WEMOS D1 
 // Output L1, L2 et L3 active powers from Triphase Router 
 // Solar Rx / Tx in JSON format to OLED 128*64 and server web
@@ -447,6 +446,7 @@ void setup()
   ESP.wdtEnable(3000);                                     // Watchdog enable   
 
   startTime_OLED = millis();                               // startTime_OLED
+  startTime_p_routed = millis();                           // starttime_p_routed
 }
 
 //**********************************************************************************************//
@@ -509,7 +509,6 @@ void loop() {
                                
            
     startTime_p_routed = millis(); // new startTime value
-    startTime_p_routed = millis();                           // starttime_p_routed
   }
 
   
