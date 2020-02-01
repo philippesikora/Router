@@ -1,4 +1,5 @@
 // * cotignac_32.ino
+// * compile with ArduinJson6 !!!!!!!!!!!!!!!!
 // * line 16 #define NO_OUTPUT ///< this line can be commented out if "debuging" output is needed
 // * line 64 //#define PRIORITY_ROTATION ///< this line must be commented out if you want fixed priorities
 // * line 87: constexpr pairForceLoad rg_ForceLoad[NO_OF_DUMPLOADS] = {{0, 6},  /**< force config for load #1 */
