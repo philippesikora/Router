@@ -387,6 +387,13 @@ int pulse_1() // fonction GET index compteur Cumulus
     return xml.toInt(); //Converts string to int
      
   } else {
+      oled.setFont ( System5x7 );
+      oled.clear ( );
+      oled.set2X ( );
+      oled.println ("***********"); 
+      oled.println ("*  ERROR  *");
+      oled.println ("* IP WES  *");
+      oled.println ("***********");
       return 0;
   }
 
