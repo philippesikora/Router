@@ -439,7 +439,7 @@ void setup()
 //**********************************************************************************************//
 
 void loop() {
-
+      
   if (WiFi.status() != WL_CONNECTED) {    // if not wifi
     reconnect();                          // try to reconnect
     }  
@@ -463,6 +463,34 @@ void loop() {
     oled_display();                      // Display total active power, L1, L2 and L3 on OLED 128*64 
     startTime_OLED = millis();           // New startime value
   }
+
+  if((millis() - startTime_p_routed) > 300000) // Update p_routed value every 5mm
+  {                             
+    // p-routed update every 5mm  //
+    // true if off-peak tariff (HC) is active
+    // false if on-peak tariff (HP) is active
+
+      if ((TARIFF == false) && (latch == true)) // détection on-peak tariff (HP)
+        {
+        oled_index_display();
+        ref_index=pulse_1();   // store ref_index
+        latch=false; 
+        }                      // on-peak tariff (HP) is active
+
+      if ((TARIFF == false) && (latch == false))  // if on-peak tariff (HP)
+        { 
+        oled_index_display();
+        current_index=pulse_1();
+        p_routed= (current_index - ref_index);} // calculation p_routed during on-peak tariff (HP)
+        
+      else {
+        latch=true; 
+      } // off-peak tariff (HC) is active
+                               
+           
+    startTime_p_routed = millis(); // new startTime value
+  }
+
   
 }
 
