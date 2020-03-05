@@ -177,7 +177,7 @@ String SendHTML(String TIME,int p_routed,int p_inject,int p_linky,int p_solar,in
   //end icon p_linky
   
   ptr +="</div>";
-  ptr +="<div class='side-by-side text'>P_linky</div>";
+  ptr +="<div class='side-by-side text'>P_linky HP</div>";
   ptr +="<div class='side-by-side reading'>";
   ptr +=(int)p_linky;
   ptr +="<span class='superscript'>Wh</span></div>";
@@ -468,6 +468,7 @@ void loop() {
       if (PTEC == "H. Creuses")
        {  
        p_routed = (current_index.PULSE1 - ref_index.PULSE1);
+       p_solar = (current_index.HCHP_tic1 - ref_index.HCHP_tic1);
        p_inject = (current_index.HCHP_tic2 - ref_index.HCHP_tic2); 
        CUMULUS_temperature=current_index.CUMULUS_temp;
        TIME=current_index.xml_TIME;
