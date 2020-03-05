@@ -273,14 +273,14 @@ void oled_HC_display() {
     oled.set2X ( );
     oled.println ("*H CREUSE*");        // Line 1 "H CREUSE"
       
+    oled.print ("PR= ");                // Line 1 "PR= 1000Wh"
+    oled.print (p_routed);
+    oled.println ("Wh"); 
+      
     oled.print ("PI= ");                // Line 3 "PI= 1000Wh" 
     oled.print (p_inject); 
     oled.println ("Wh"); 
 
-    oled.print ("PS= ");                // Line 3 "PS= 3000Wh"
-    oled.print (p_solar);
-    oled.println ("Wh"); 
-    
     oled.print ("CUM= ");               // Line 4 "CUM= 56deg "
     oled.print (CUMULUS_temperature);
     oled.println ("deg");      
@@ -467,7 +467,7 @@ void loop() {
         
       if (PTEC == "H. Creuses")
        {  
-       p_solar = (current_index.HCHP_tic1 - ref_index.HCHP_tic1);       // calculation p_routed during on-peak tariff (HP)
+       p_routed = (current_index.PULSE1 - ref_index.PULSE1);
        p_inject = (current_index.HCHP_tic2 - ref_index.HCHP_tic2); 
        CUMULUS_temperature=current_index.CUMULUS_temp;
        TIME=current_index.xml_TIME;
