@@ -472,7 +472,6 @@ void loop() {
        CUMULUS_temperature=current_index.CUMULUS_temp;
        TIME=current_index.xml_TIME;
        oled_HC_display();  
-       startTime_OLED = millis();                                  // New startime value
        }  
                                                 
     startTime_p_routed = millis(); // new startTime value
