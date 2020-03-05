@@ -26,7 +26,6 @@
 #define ssid      "sceslaw_1"        // WiFi SSID
 #define password  "155835ef8b"       // WiFi password
 
-//#define UART_BAUD0 115200            // Baudrate
 #define UART_BAUD0 9600              // Baudrate
 #define SERIAL_PARAM0 SERIAL_8N1     // Data/Parity/Stop
 #define bufferSize 2048
@@ -293,7 +292,7 @@ void oled_HC_display() {
     oled.set2X ( );
     oled.println ("*H CREUSE*");        // Line 1 "H CREUSE"
       
-    oled.print ("PR= ");                // Line 1 "PR= 1000Wh"
+    oled.print ("PR= ");                // Line 2 "PR= 1000Wh"
     oled.print (p_routed);
     oled.println ("Wh"); 
       
