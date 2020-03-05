@@ -272,15 +272,15 @@ void oled_HC_display() {
     oled.clear ( );
     oled.set2X ( );
     oled.println ("*H CREUSE*");        // Line 1 "H CREUSE"
+      
+    oled.print ("PI= ");                // Line 3 "PI= 1000Wh" 
+    oled.print (p_inject); 
+    oled.println ("Wh"); 
 
     oled.print ("PS= ");                // Line 3 "PS= 3000Wh"
     oled.print (p_solar);
     oled.println ("Wh"); 
     
-    oled.print ("PI= ");                // Line 3 "PI= 1000Wh" 
-    oled.print (p_inject); 
-    oled.println ("Wh"); 
-
     oled.print ("CUM= ");               // Line 4 "CUM= 56deg "
     oled.print (CUMULUS_temperature);
     oled.println ("deg");      
