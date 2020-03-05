@@ -437,24 +437,6 @@ void loop() {
   server.handleClient();                  // check if client and provide HTML page
                                           // à chaque itération, la fonction handleClient traite les requêtes 
 
-
-
-  if((millis() - startTime_OLED) > 900000)                         // Update OLED display every 15min
-  {
-     current_index=esp_cgx();
-     PTEC=current_index.xml_PTEC;
-
-     if (PTEC == "H. Creuses")
-       {  
-       p_solar = (current_index.HCHP_tic1 - ref_index.HCHP_tic1);       // calculation p_routed during on-peak tariff (HP)
-       p_inject = (current_index.HCHP_tic2 - ref_index.HCHP_tic2); 
-       CUMULUS_temperature=current_index.CUMULUS_temp;
-       TIME="H. Creuses";
-       oled_HC_display();  
-       startTime_OLED = millis();                                  // New startime value
-       }  
-  }
-  
   
   if((millis() - startTime_p_routed) > 300000)                     // Update p_routed value every 5mm
   {                             
@@ -480,10 +462,18 @@ void loop() {
 
       if ((PTEC == "H. Creuses") && (latch == false))
         {
-        latch=true; 
-        TIME="H. Creuses";
-        oled_HC_display();    
+        latch=true;    
         }
+        
+      if (PTEC == "H. Creuses")
+       {  
+       p_solar = (current_index.HCHP_tic1 - ref_index.HCHP_tic1);       // calculation p_routed during on-peak tariff (HP)
+       p_inject = (current_index.HCHP_tic2 - ref_index.HCHP_tic2); 
+       CUMULUS_temperature=current_index.CUMULUS_temp;
+       TIME="H. Creuses";
+       oled_HC_display();  
+       startTime_OLED = millis();                                  // New startime value
+       }  
                                                 
     startTime_p_routed = millis(); // new startTime value
   }
