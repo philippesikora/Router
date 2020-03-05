@@ -470,7 +470,7 @@ void loop() {
        p_solar = (current_index.HCHP_tic1 - ref_index.HCHP_tic1);       // calculation p_routed during on-peak tariff (HP)
        p_inject = (current_index.HCHP_tic2 - ref_index.HCHP_tic2); 
        CUMULUS_temperature=current_index.CUMULUS_temp;
-       TIME="H. Creuses";
+       TIME=current_index.xml_TIME;
        oled_HC_display();  
        startTime_OLED = millis();                                  // New startime value
        }  
