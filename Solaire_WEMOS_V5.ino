@@ -445,7 +445,7 @@ void loop() {
 
       if ((PTEC == "H. Pleines") && (latch == true))               // détection on-peak tariff (HP)
         {
-        ref_index=esp_cgx();                                       // store ref_index
+        ref_index=current_index;                                   // store ref_index
         latch=false;                                               // on-peak tariff (HP) is active
         }                      
 
