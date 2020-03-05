@@ -60,7 +60,7 @@ SSD1306AsciiWire oled;
 //                                    HTML * AJAX [START]                                          //
 //************************************************************************************************//
 
-String SendHTML(String TIME,int p_routed,int p_inject,int p_linky,int p_solar,int CUMULUS_temperature){
+String SendHTML(String TIME,int p_routed,int p_inject,int p_linky,int p_solar,int CUMULUS_temperature,String PTEC){
   String ptr = "<!DOCTYPE html>";
   ptr +="<html>";
   ptr +="<head>";
@@ -221,6 +221,25 @@ String SendHTML(String TIME,int p_routed,int p_inject,int p_linky,int p_solar,in
   ptr +="<span class='superscript'>deg</span></div>";
   ptr +="</div>";
   
+      
+  ptr +="<div class='data PTEC'>";
+  ptr +="<div class='side-by-side icon'>";
+
+  //icone Tarif
+  ptr +="<svg enable-background='new 0 0 29.235 40.64'height=40.64px id=Layer_1 version=1.1 viewBox='0 0 29.235 40.64'width=29.235px x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><path d='M14.618,0C14.618,0,0,17.95,0,26.022C0,34.096,6.544,40.64,14.618,40.64s14.617-6.544,14.617-14.617";
+  ptr +="C29.235,17.95,14.618,0,14.618,0z M13.667,37.135c-5.604,0-10.162-4.56-10.162-10.162c0-0.787,0.638-1.426,1.426-1.426";
+  ptr +="c0.787,0,1.425,0.639,1.425,1.426c0,4.031,3.28,7.312,7.311,7.312c0.787,0,1.425,0.638,1.425,1.425";
+  ptr +="C15.093,36.497,14.455,37.135,13.667,37.135z'fill=#3C97D3 /></svg>";
+  //end icon Tarif
+  
+  ptr +="</div>";
+  ptr +="<div class='side-by-side text'>Tarif</div>";
+  ptr +="<div class='side-by-side reading'>";
+  ptr +=(String)PTEC;
+  ptr +="<span class='superscript'></span></div>";
+  ptr +="</div>";  
+      
+  
   ptr +="</div>";
   ptr +="</body>";
   ptr +="</html>";
@@ -238,7 +257,7 @@ String SendHTML(String TIME,int p_routed,int p_inject,int p_linky,int p_solar,in
 //************************************************************************************************//
 
 void handle_OnConnect() {
-  server.send(200, "text/html", SendHTML(TIME,p_routed,p_inject,p_linky,p_solar,CUMULUS_temperature)); 
+  server.send(200, "text/html", SendHTML(TIME,p_routed,p_inject,p_linky,p_solar,CUMULUS_temperature,PTEC)); 
 }
 
 void handle_NotFound(){
@@ -414,7 +433,7 @@ void setup()
   oled_index_display();
 
   startTime_p_routed = millis();                            // starttime_p_routed
-  startTime_OLED = millis();                               // startTime_OLED
+  startTime_OLED = millis();                               //  startTime_OLED
 }
 
 //**********************************************************************************************//
